@@ -1,5 +1,4 @@
 class Api::V1::PropertiesController < ApplicationController
-
   def index
     result = Property.all
 
@@ -8,28 +7,30 @@ class Api::V1::PropertiesController < ApplicationController
 
   def show
     result = Property.find(params[:id])
-
-    render json: { status: 'success', property: result }
+    render json: { status: 'success', property: result } if result.present?
+  rescue StandardError
+    render json: { status: 'failed', info: 'property not found' }
   end
 
   def create
-    result = Property.create(property_params)
-
-    render json: { status: 'success', property: result }
+    result = Property.new(property_params)
+    render json: { status: 'success', property: result } if result.save
+  rescue StandardError
+    render json: { status: 'failed', property: 'check your data' }
   end
 
   def update
     result = Property.find[params[:id]]
-    result.update(property_params)
-
-    render json: { status: 'success', property: result }
+    render json: { status: 'success', property: result } if result.updated(property_params)
+  rescue StandardError
+    render json: { status: 'failed', property: 'check your data' }
   end
 
   def delete
     result = Property.find(params[:id])
-    result.delete()
-
-    render json: { status: 'success', property: result }
+    render json: { status: 'success', property: result } if result.delete
+  rescue StandardError
+    render json: { status: 'failed', property: 'check your data' }
   end
 
   private
