@@ -92,6 +92,12 @@ Rails.application.routes.draw do
       post 'user_address', to: 'user_addresses#create'
       patch 'user_address/:id', to: 'user_addresses#update'
       delete 'user_address/:id', to: 'user_addresses#delete'
+
+      get 'agent_addresses', to: 'agent_addresses#index'
+      get 'agent_addresses/:id', to: 'agent_addresses#show'
+      post 'agent_addresses', to: 'agent_addresses#create'
+      patch 'agent_addresses/:id', to: 'agent_addresses#update'
+      delete 'agent_addresses/:id', to: 'agent_addresses#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
