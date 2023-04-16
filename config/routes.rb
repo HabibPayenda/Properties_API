@@ -62,6 +62,12 @@ Rails.application.routes.draw do
       post 'home_rooms', to: 'home_rooms#create'
       patch 'home_rooms/:id', to: 'home_rooms#update'
       delete 'home_rooms/:id', to: 'home_rooms#delete'
+
+      get 'lands', to: 'lands#index'
+      get 'lands/:id', to: 'lands#show'
+      post 'lands', to: 'lands#create'
+      patch 'lands/:id', to: 'lands#update'
+      delete 'lands/:id', to: 'lands#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
