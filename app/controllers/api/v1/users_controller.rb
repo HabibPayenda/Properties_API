@@ -24,8 +24,8 @@ module Api
       end
 
       def update
-        result = User.find[params[:id]]
-        render json: { status: 'success', user: result } if result.updated(user_params)
+        result = User.find(params[:id])
+        render json: { status: 'success', user: result } if result.update(user_params)
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }
       end
