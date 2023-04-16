@@ -38,6 +38,12 @@ Rails.application.routes.draw do
       post 'user_contacts', to: 'user_contacts#create'
       patch 'user_contacts/:id', to: 'user_contacts#update'
       get 'user_contacts/:id', to: 'user_contacts#delete'
+
+      get 'agent_contacts', to: 'agent_contacts#index'
+      get 'agent_contacts/:id', to: 'agent_contacts#show'
+      post 'agent_contacts', to: 'agent_contacts#create'
+      patch 'agent_contacts/:id', to: 'agent_contacts#update'
+      delete 'agent_contacts/:id', to: 'agent_contacts#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
