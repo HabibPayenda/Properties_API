@@ -36,6 +36,6 @@ class Api::V1::PropertiesController < ApplicationController
   private
 
   def property_params
-    params.require(:property).permit(:type, :name, :description, :availability_status, property_manager_id, agent_id)
+    params.require(:property).permit(:type, :name, :description, :availability_status, :property_manager_id, :agent_id)
   end
 end
