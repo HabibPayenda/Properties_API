@@ -26,6 +26,13 @@ Rails.application.routes.draw do
       post 'contacts', to: 'contacts#create'
       patch 'contacts/:id', to: 'contacts#update'
       delete 'contacts/:id', to: 'contacts#delete'
+
+      get 'property_managers_contacts', to: 'property_managers_contacts#index'
+      get 'property_managers_contacts/:id', to: 'property_managers_contacts#show'
+      post 'property_managers_contacts', to: 'property_managers_contacts#create'
+      patch 'property_managers_contacts/:id', to: 'property_managers_contacts#update'
+      delete 'property_managers_contacts/:id', to: 'property_managers_contacts#delete'
+
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
