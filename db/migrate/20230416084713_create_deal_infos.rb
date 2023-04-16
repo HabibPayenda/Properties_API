@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateDealInfos < ActiveRecord::Migration[7.0]
   def change
     create_table :deal_infos do |t|

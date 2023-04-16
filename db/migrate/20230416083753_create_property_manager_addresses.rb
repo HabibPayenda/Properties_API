@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatePropertyManagerAddresses < ActiveRecord::Migration[7.0]
   def change
     create_table :property_manager_addresses do |t|
