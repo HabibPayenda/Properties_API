@@ -14,6 +14,12 @@ Rails.application.routes.draw do
       post 'users', to: 'users#create'
       patch 'users/:id', to: 'users#update'
       delete 'users/:id', to: 'users#delete'
+
+      get 'property_managers', to: 'property_managers#index'
+      get 'property_managers/:id', to: 'property_managers#show'
+      post 'property_managers', to: 'property_managers#create'
+      patch 'property_managers/:id', to: 'property_managers#updata'
+      delete 'property_managers/:id', to: 'property_managers#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

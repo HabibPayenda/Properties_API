@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# PropertyMangersController
 module Api
   module V1
     class PropertyManagersController < ApplicationController
@@ -40,7 +41,7 @@ module Api
       private
 
       def property_manager_params
-        params.require(:property_manager).permit(:name, :company_name, :status)
+        params.require(:property_manager).permit(:name, :company_name, :status, :agent_id)
       end
     end
   end
