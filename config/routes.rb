@@ -134,6 +134,12 @@ Rails.application.routes.draw do
       post 'restrictions', to: 'restrictions#create'
       patch 'restrictions/:id', to: 'restrictions#create'
       delete 'restrictions/:id', to: 'restrictions#delete'
+
+      get 'agents', to: 'agents#index'
+      get 'agents/:id', to: 'agents#show'
+      post 'agents', to: 'agents#create'
+      patch 'agents/:id', to: 'agents#update'
+      delete 'agents/:id', to: 'agents#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
