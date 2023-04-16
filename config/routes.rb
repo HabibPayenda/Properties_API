@@ -116,6 +116,12 @@ Rails.application.routes.draw do
       post 'property_addresses', to: 'property_addresses#create'
       patch 'property_addresses/:id', to: 'property_addresses#update'
       delete 'property_addresses/:id', to: 'property_addresses#delete'
+
+      get 'appointment_addresses', to: 'appointment_addresses#index'
+      get 'appointment_addresses/:id', to: 'appointment_addresses#show'
+      post 'appointment_addresses', to: 'appointment_addresses#create'
+      patch 'appointment_addresses/:id', to: 'appointment_addresses#update'
+      delete 'appointment_addresses/:id', to: 'appointment_addresses#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
