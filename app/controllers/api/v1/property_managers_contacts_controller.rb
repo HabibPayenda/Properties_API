@@ -3,7 +3,6 @@
 module Api
   module V1
     class PropertyManagersContactsController < ApplicationController
-
       def index
         result = PropertyManagerContact.all
         render json: { status: 'success', property_managers_contacts: result }
@@ -43,7 +42,7 @@ module Api
       private
 
       def property_manager_contact_params
-        params.require(:property_managers_contact).permit(:contact_id, :user_id)
+        params.require(:property_managers_contact).permit(:contact_id, :property_manager_id)
       end
     end
   end
