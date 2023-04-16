@@ -12,7 +12,7 @@ module Api
         result = AdminAddress.find(params[:id])
         render json: { status: 'success', admin_address: result } if result.present?
       rescue StandardError
-        render json: { status: 'failed', info: 'land not found' }
+        render json: { status: 'failed', info: 'admin address not found' }
       end
 
       def create
