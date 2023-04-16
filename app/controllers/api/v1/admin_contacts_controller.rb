@@ -42,7 +42,7 @@ module Api
       private
 
       def admin_contact_params
-        params.require(:property_managers_contact).permit(:contact_id, :admin_id)
+        params.require(:admin_contact).permit(:contact_id, :admin_id)
       end
     end
   end
