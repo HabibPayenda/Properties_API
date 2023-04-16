@@ -122,6 +122,12 @@ Rails.application.routes.draw do
       post 'appointment_addresses', to: 'appointment_addresses#create'
       patch 'appointment_addresses/:id', to: 'appointment_addresses#update'
       delete 'appointment_addresses/:id', to: 'appointment_addresses#delete'
+
+      get 'amenities', to: 'amenities#index'
+      get 'amenities/:id', to: 'amenities#show'
+      post 'amenities', to: 'amenities#create'
+      patch 'amenities/:id', to: 'amenities#update'
+      delete 'amenities/:id', to: 'amenities#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
