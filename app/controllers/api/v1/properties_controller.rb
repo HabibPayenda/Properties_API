@@ -24,7 +24,7 @@ module Api
       end
 
       def update
-        result = Property.find[params[:id]]
+        result = Property.find(params[:id])
         render json: { status: 'success', property: result } if result.updated(property_params)
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }
