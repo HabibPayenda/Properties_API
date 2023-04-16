@@ -128,6 +128,12 @@ Rails.application.routes.draw do
       post 'amenities', to: 'amenities#create'
       patch 'amenities/:id', to: 'amenities#update'
       delete 'amenities/:id', to: 'amenities#delete'
+
+      get 'restrictions', to: 'restrictions#index'
+      get 'restrictions/:id', to: 'restrictions#show'
+      post 'restrictions', to: 'restrictions#create'
+      patch 'restrictions/:id', to: 'restrictions#create'
+      delete 'restrictions/:id', to: 'restrictions#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
