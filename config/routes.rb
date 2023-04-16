@@ -56,8 +56,6 @@ Rails.application.routes.draw do
       post 'homes', to: 'homes#create'
       patch 'homes/:id', to: 'homes#update'
       delete 'homes/:id', to: 'homes#delete'
-
-
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
