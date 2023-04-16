@@ -68,6 +68,12 @@ Rails.application.routes.draw do
       post 'lands', to: 'lands#create'
       patch 'lands/:id', to: 'lands#update'
       delete 'lands/:id', to: 'lands#delete'
+
+      get 'cars', to: 'cars#index'
+      get 'cars/:id', to: 'cars#show'
+      post 'cars', to: 'cars#create'
+      patch 'cars/:id', to: 'cars#update'
+      delete 'cars/:id', to: 'cars#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
