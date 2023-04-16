@@ -80,6 +80,12 @@ Rails.application.routes.draw do
       post 'admins', to: 'admins#create'
       patch 'admins/:id', to: 'admins#update'
       delete 'admins/:id', to: 'admins#delete'
+
+      get 'addresses', to: 'addresses#index'
+      get 'addresses/:id', to: 'addresses#show'
+      post 'addresses', to: 'addresses#create'
+      patch 'addresses/:id', to: 'addresses#update'
+      delete 'addresses/:id', to: 'addresses#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
