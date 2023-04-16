@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  brand: MyString
+  model: MyString
+  year: 1
+  mile_age: 1
+  transmission: MyString
+  fuel_type: MyString
+  engine_size: 1
+  body_style: MyString
+  identity_number: 1
+
+two:
+  brand: MyString
+  model: MyString
+  year: 1
+  mile_age: 1
+  transmission: MyString
+  fuel_type: MyString
+  engine_size: 1
+  body_style: MyString
+  identity_number: 1

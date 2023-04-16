@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  agent: one
+  user: one
+  appointment: one
+  review: one
+
+two:
+  agent: two
+  user: two
+  appointment: two
+  review: two

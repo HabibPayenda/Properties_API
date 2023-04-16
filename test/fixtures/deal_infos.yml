@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  duration: 1
+  price_per_duration: 1
+  total_price: 1
+  total_duration: 1
+  property: one
+
+two:
+  type: 
+  duration: 1
+  price_per_duration: 1
+  total_price: 1
+  total_duration: 1
+  property: two
