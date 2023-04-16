@@ -16,21 +16,21 @@ class Api::V1::PropertiesController < ApplicationController
     result = Property.new(property_params)
     render json: { status: 'success', property: result } if result.save
   rescue StandardError
-    render json: { status: 'failed', property: 'check your data' }
+    render json: { status: 'failed', info: 'check your data' }
   end
 
   def update
     result = Property.find[params[:id]]
     render json: { status: 'success', property: result } if result.updated(property_params)
   rescue StandardError
-    render json: { status: 'failed', property: 'check your data' }
+    render json: { status: 'failed', info: 'check your data' }
   end
 
   def delete
     result = Property.find(params[:id])
     render json: { status: 'success', property: result } if result.delete
   rescue StandardError
-    render json: { status: 'failed', property: 'check your data' }
+    render json: { status: 'failed', info: 'check your data' }
   end
 
   private
