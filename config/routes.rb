@@ -110,6 +110,12 @@ Rails.application.routes.draw do
       post 'property_manger_addresses', to: 'property_manger_addresses#create'
       patch 'property_manger_addresses/:id', to: 'property_manger_addresses#update'
       delete 'property_manger_addresses/:id', to: 'property_manger_addresses#delete'
+
+      get 'property_addresses', to: 'property_addresses#index'
+      get 'property_addresses/:id', to: 'property_addresses#show'
+      post 'property_addresses', to: 'property_addresses#create'
+      patch 'property_addresses/:id', to: 'property_addresses#update'
+      delete 'property_addresses/:id', to: 'property_addresses#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
