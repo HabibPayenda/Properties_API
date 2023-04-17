@@ -200,6 +200,12 @@ Rails.application.routes.draw do
       post 'user_reviews', to: 'user_reviews#create'
       patch 'user_reviews/:id', to: 'user_reviews#update'
       delete 'user_reviews/:id', to: 'user_reviews#delete'
+
+      get 'agent_reviews', to: 'agent_reviews#index'
+      get 'agent_reviews/:id', to: 'agent_reviews#show'
+      post 'agent_reviews', to: 'agent_reviews#create'
+      patch 'agent_reviews/:id', to: 'agent_reviews#update'
+      delete 'agent_reviews/:id', to: 'agent_reviews#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
