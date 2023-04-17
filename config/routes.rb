@@ -176,6 +176,12 @@ Rails.application.routes.draw do
       post 'user_favorites', to: 'user_favorites#index'
       patch 'user_favorites/:id', to: 'user_favorites#update'
       delete 'user_favorites/:id', to: 'user_favorites#delete'
+
+      get 'user_searches', to: 'user_searches#index'
+      get 'user_searches/:id', to: 'user_searches#show'
+      post 'user_searches', to: 'user_searches#create'
+      patch 'user_searches/:id', to: 'user_searches#update'
+      delete 'user_searches/:id', to: 'user_searches#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
