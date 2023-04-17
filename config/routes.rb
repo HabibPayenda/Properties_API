@@ -206,6 +206,12 @@ Rails.application.routes.draw do
       post 'agent_reviews', to: 'agent_reviews#create'
       patch 'agent_reviews/:id', to: 'agent_reviews#update'
       delete 'agent_reviews/:id', to: 'agent_reviews#delete'
+
+      get 'property_manager_reviews', to: 'property_manager_reviews#index'
+      get 'property_manager_reviews/:id', to: 'property_manager_reviews#show'
+      post 'property_manager_reviews', to: 'property_manager_reviews#create'
+      patch 'property_manager_reviews/:id', to: 'property_manager_reviews#update'
+      delete 'property_manager_reviews/:id', to: 'property_manager_reviews#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
