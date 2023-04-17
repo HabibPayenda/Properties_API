@@ -182,6 +182,12 @@ Rails.application.routes.draw do
       post 'user_searches', to: 'user_searches#create'
       patch 'user_searches/:id', to: 'user_searches#update'
       delete 'user_searches/:id', to: 'user_searches#delete'
+
+      get 'user_views', to: 'user_views#index'
+      get 'user_views/:id', to: 'user_views#show'
+      post 'user_views', to: 'user_views#create'
+      patch 'user_views/:id', to: 'user_views#update'
+      delete 'user_views/:id', to: 'user_views#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
