@@ -141,11 +141,17 @@ Rails.application.routes.draw do
       patch 'agents/:id', to: 'agents#update'
       delete 'agents/:id', to: 'agents#delete'
 
-      # get 'deals', to: 'deals/index'
-      # get 'deals/:id', to: 'deals/show'
-      # post 'deals', to: 'deals/create'
-      # patch 'deals/:id', to: 'deals/update'
-      # delete 'deals/:id', to: 'deals/delete'
+      get 'deals', to: 'deals#index'
+      get 'deals/:id', to: 'deals#show'
+      post 'deals', to: 'deals#create'
+      patch 'deals/:id', to: 'deals#update'
+      delete 'deals/:id', to: 'deals#delete'
+
+      get 'reports', to: 'reports#index'
+      get 'reports/:id', to: 'reports#show'
+      post 'reports', to: 'reports#create'
+      patch 'reports/:id', to: 'reports#update'
+      delete 'reports/:id', to: 'reports#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
