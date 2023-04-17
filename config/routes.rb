@@ -194,6 +194,12 @@ Rails.application.routes.draw do
       post 'reviews', to: 'reviews#create'
       patch 'reviews/:id', to: 'reviews#update'
       delete 'reviews/:id', to: 'reviews#delete'
+
+      get 'user_reviews', to: 'user_reviews#index'
+      get 'user_reviews/:id', to: 'user_reviews#show'
+      post 'user_reviews', to: 'user_reviews#create'
+      patch 'user_reviews/:id', to: 'user_reviews#update'
+      delete 'user_reviews/:id', to: 'user_reviews#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
