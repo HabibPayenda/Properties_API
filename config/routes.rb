@@ -158,6 +158,12 @@ Rails.application.routes.draw do
       post 'offers', to: 'offers#create'
       patch 'offers/:id', to: 'offers#update'
       delete 'offers/:id', to: 'offers#delete'
+
+      get 'appointments', to: 'appointments#index'
+      get 'appointments/:id', to: 'appointments#show'
+      post 'appointments', to: 'appointments#create'
+      patch 'appointments/:id', to: 'appointments#update'
+      delete 'appointments/:id', to: 'appointments#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
