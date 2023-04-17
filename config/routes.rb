@@ -224,6 +224,12 @@ Rails.application.routes.draw do
       post 'trainings', to: 'trainings#create'
       patch 'trainings/:id', to: 'trainings#update'
       delete 'trainings/:id', to: 'trainings#delete'
+
+      get 'training_records', to: 'training_records#index'
+      get 'training_records/:id', to: 'training_records#show'
+      post 'training_records', to: 'training_records#create'
+      patch 'training_records/:id', to: 'training_records#update'
+      delete 'training_records/:id', to: 'training_records#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
