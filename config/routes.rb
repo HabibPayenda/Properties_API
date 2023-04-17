@@ -164,6 +164,12 @@ Rails.application.routes.draw do
       post 'appointments', to: 'appointments#create'
       patch 'appointments/:id', to: 'appointments#update'
       delete 'appointments/:id', to: 'appointments#delete'
+
+      get 'property_reports', to: 'property_reports#index'
+      get 'property_reports/:id', to: 'property_reports#show'
+      post 'property_reports', to: 'property_reports#create'
+      patch 'property_reports/:id', to: 'property_reports#update'
+      delete 'property_reports/:id', to: 'property_reports#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
