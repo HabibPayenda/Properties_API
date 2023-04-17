@@ -170,6 +170,12 @@ Rails.application.routes.draw do
       post 'property_reports', to: 'property_reports#create'
       patch 'property_reports/:id', to: 'property_reports#update'
       delete 'property_reports/:id', to: 'property_reports#delete'
+
+      get 'user_favorites', to: 'user_favorites#index'
+      get 'user_favorites/:id', to: 'user_favorites#show'
+      post 'user_favorites', to: 'user_favorites#index'
+      patch 'user_favorites/:id', to: 'user_favorites#update'
+      delete 'user_favorites/:id', to: 'user_favorites#delete'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
