@@ -4,7 +4,7 @@ require 'test_helper'
 
 module Api
   module V1
-    class PropertyReportsControllerTest < ActionDispatch::IntegrationTest
+    class UserFavoritesControllerTest < ActionDispatch::IntegrationTest
       # test "the truth" do
       #   assert true
       # end
