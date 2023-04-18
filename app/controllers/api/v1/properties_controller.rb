@@ -3,6 +3,8 @@
 module Api
   module V1
     class PropertiesController < ApplicationController
+      before_action :authorize_admin || :authorize_user, only: [:index]
+      before_action :authorize_agent
       def index
         result = Property.all
 

@@ -78,6 +78,7 @@ Rails.application.routes.draw do
       get 'admins', to: 'admins#index'
       get 'admins/:id', to: 'admins#show'
       post 'admins', to: 'admins#create'
+      post 'admins/login', to: 'admins#login'
       patch 'admins/:id', to: 'admins#update'
       delete 'admins/:id', to: 'admins#delete'
 
