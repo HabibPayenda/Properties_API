@@ -21,8 +21,10 @@ class ApplicationController < ActionController::API
     decoded_token = decode_token
     return unless decoded_token
 
-    admin_id = decoded_token[0]['id']
+    admin_id = decoded_token[0]['admin_id']
+    admin_name = decoded_token[0]['admin_name']
     admin = Admin.find(admin_id)
+    admin.name == admin_name
   end
 
   def authorized_user
@@ -30,7 +32,9 @@ class ApplicationController < ActionController::API
     return unless decoded_token
 
     user_id = decoded_token[0]['id']
+    user_name = decoded_token[0]['user_name']
     user = User.find(user_id)
+    user.name == user_name
   end
 
   def authorize_user

@@ -19,7 +19,8 @@ module Api
         result = Admin.find_by(name: admin_params[:name])
         if result&.authenticate(admin_params[:password])
 
-          admin_token = encode_token({ admin_id: result.id, admin_role: result.role, admin_status: result.status })
+          admin_token = encode_token({ admin_id: result.id, admin_name: result.name, admin_role: result.role,
+                                       admin_status: result.status })
           render json: { status: 'success', admin: result, token: admin_token }
         else
           render json: { status: 'failed', info: 'wrong admin name or password!' }
