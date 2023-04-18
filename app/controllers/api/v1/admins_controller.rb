@@ -21,8 +21,8 @@ module Api
           admin_token = encode_token({ admin_id: result.id, admin_role: result.role, admin_status: result.status })
           render json: { status: 'success', admin: result, token: admin_token } if result.save
         end
-      # rescue StandardError
-      #   render json: { status: 'failed', info: 'check your data' }
+      rescue StandardError
+        render json: { status: 'failed', info: 'check your data' }
       end
 
       def update
