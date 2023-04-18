@@ -17,9 +17,12 @@ module Api
 
       def create
         result = Admin.new(admin_params)
-        render json: { status: 'success', admin: result } if result.save
-      rescue StandardError
-        render json: { status: 'failed', info: 'check your data' }
+        if result.valid?
+          admin_token = encode_token({ admin_id: result.id, admin_role: result.role, admin_status: result.status })
+          render json: { status: 'success', admin: result, token: admin_token } if result.save
+        end
+      # rescue StandardError
+      #   render json: { status: 'failed', info: 'check your data' }
       end
 
       def update
