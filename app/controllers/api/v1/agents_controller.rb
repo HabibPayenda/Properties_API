@@ -3,6 +3,7 @@
 module Api
   module V1
     class AgentsController < ApplicationController
+      before_action :authorize_admin
       def index
         result = Agent.all
         render json: { status: 'success', agents: result }
@@ -16,7 +17,13 @@ module Api
       end
 
       def create
-        result = Agent.new(agent_params)
+        admin = Admin.find(params[:admin_id])
+        result = Agent.new()
+        result.admin = admin
+        result.name = params[:name]
+        result.status = params[:status]
+        result.hire_date = params[:hire_date]
+        result = Agent.create(agent_params)
         render json: { status: 'success', agent: result } if result.save
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }
