@@ -5,14 +5,16 @@ module Api
   module V1
     class PropertyManagersController < ApplicationController
       def index
-        result = PropertyManager.all
+        result = PropertyManager.all.includes(:agent)
 
-        render json: { status: 'success', property_managers: result }
+        render json: { status: 'success', property_managers: result }, include: ['agent']
       end
 
       def show
-        result = PropertyManager.includes(:properties, :property_manager_addresses, :property_manager_reviews).find(params[:id])
-        render json: { status: 'success', property_manager: result } if result.present?
+        result = PropertyManager.includes(:properties, :property_manager_addresses,
+                                          :property_manager_reviews).find(params[:id])
+        render json: { status: 'success', property_manager: result },
+               include: %w[properties property_manager_addresses property_manager_reviews]
       rescue StandardError
         render json: { status: 'failed', info: 'property_manager not found' }
       end
