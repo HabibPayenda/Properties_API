@@ -11,7 +11,7 @@ module Api
       end
 
       def show
-        result = PropertyManager.find(params[:id])
+        result = PropertyManager.includes(:properties, :property_manager_addresses, :property_manager_reviews).find(params[:id])
         render json: { status: 'success', property_manager: result } if result.present?
       rescue StandardError
         render json: { status: 'failed', info: 'property_manager not found' }

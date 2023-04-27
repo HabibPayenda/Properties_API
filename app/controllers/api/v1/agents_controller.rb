@@ -17,12 +17,6 @@ module Api
       end
 
       def create
-        admin = Admin.find(params[:admin_id])
-        result = Agent.new()
-        result.admin = admin
-        result.name = params[:name]
-        result.status = params[:status]
-        result.hire_date = params[:hire_date]
         result = Agent.create(agent_params)
         render json: { status: 'success', agent: result } if result.save
       rescue StandardError
