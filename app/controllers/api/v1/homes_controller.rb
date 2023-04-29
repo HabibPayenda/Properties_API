@@ -17,9 +17,9 @@ module Api
 
       def create
         property = Property.create!(name: params[:name], description: params[:description],
-                                   availability_status: params[:availability_status],
-                                   property_type: 'Home', agent_id: params[:agent_id],
-                                   property_manager_id: params[:property_manager_id])
+                                    availability_status: params[:availability_status],
+                                    property_type: 'Home', agent_id: params[:agent_id],
+                                    property_manager_id: params[:property_manager_id])
         puts property
         puts property.id
         if property.valid?

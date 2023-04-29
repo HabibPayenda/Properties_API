@@ -10,8 +10,13 @@ module Api
       end
 
       def show
-        result = User.find(params[:id])
-        render json: { status: 'success', user: result } if result.present?
+        result = User.includes(:user_reviews, :user_views, :user_searches, :user_favorites, :user_contact,
+                               :user_addresses).find(params[:id])
+        if result.present?
+          render json: { status: 'success', user: result },
+                 include: %w[user_reviews user_views user_searches user_favorites user_contact
+                             user_addresses]
+        end
       rescue StandardError
         render json: { status: 'failed', info: 'user not found' }
       end
