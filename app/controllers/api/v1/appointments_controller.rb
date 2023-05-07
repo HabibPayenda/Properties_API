@@ -42,7 +42,8 @@ module Api
       private
 
       def appointment_params
-        params.require(:appointment).permit(:date, :time, :status, :notes, :user_id, :property_id, :agent_id)
+        params.require(:appointment).permit(:date, :time, :status, :notes, :user_id, :property_id, :agent_id, :start,
+                                            :end)
       end
     end
   end

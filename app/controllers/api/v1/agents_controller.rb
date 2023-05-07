@@ -17,8 +17,39 @@ module Api
       end
 
       def create
-        result = Agent.create(agent_params)
-        render json: { status: 'success', agent: result } if result.save
+        agent = Agent.new
+        agent.name = params[:name]
+        agent.hire_date = params[:hire_date]
+        agent.admin_id = params[:admin_id]
+        agent.status = params[:status]
+
+        contact = Contact.new if agent.save
+        contact.email_one = params[:email_one]
+        contact.phone_number_one = params[:phone_number_one]
+
+
+        agent_contact = AgentContact.new if contact.save
+        agent_contact.agent_id = agent.id
+        agent_contact.contact_id = contact.id
+
+        address = Address.new if agent_contact.save
+        address.province = params[:province]
+        address.city = params[:city]
+        address.district = params[:district]
+
+        agent_address = AgentAddress.new if address.save
+        agent_address.agent_id = agent.id
+        agent_address.address_id = address.id
+
+        if agent_address.save
+          result = Agent.includes(:agent_contacts, :agent_addresses,
+                                  :property_managers).find(agent.id)
+        end
+
+        if result.present?
+          render json: { status: 'success', agent: result },
+                 include: %w[agent_contacts agent_addresses property_managers]
+        end
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }
       end
@@ -43,7 +74,8 @@ module Api
       private
 
       def agent_params
-        params.require(:agent).permit(:name, :hire_date, :status, :admin_id)
+        params.require(:agent).permit(:name, :hire_date, :status, :admin_id, :province, :city, :district,
+                                      :phone_number_one, :email_one)
       end
     end
   end

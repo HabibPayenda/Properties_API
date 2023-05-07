@@ -4,4 +4,6 @@ class Agent < ApplicationRecord
   has_many :properties
   has_many :property_managers
   belongs_to :admin
+  has_many :agent_addresses
+  has_many :agent_contacts
 end

@@ -9,8 +9,8 @@ module Api
       end
 
       def show
-        result = Home.find(params[:id])
-        render json: { status: 'success', home: result } if result.present?
+        result = Home.includes(:home_rooms, :property).find(params[:id])
+        render json: { status: 'success', home: result }, include: %w[home_rooms property] if result.present?
       rescue StandardError
         render json: { status: 'failed', info: 'home not found' }
       end
@@ -28,6 +28,27 @@ module Api
         end
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }
+      end
+
+      # def room_params
+      #   params.require(:home).permit(:width, :length, :windows, :cup_board, :to_sun, :color, :home_id)
+      # end
+
+      def create_room
+        result = Home.includes(:home_rooms, :property).find(params[:home_id])
+        room = HomeRoom.new if result.valid?
+        room.color = params[:color]
+        room.cup_board = params[:cup_board]
+        room.home_id = result.id
+        room.width = params[:width]
+        room.length = params[:length]
+        room.to_sun = params[:to_sun]
+        room.windows = params[:windows]
+        updated_home = Home.includes(:home_rooms, :property).find(params[:home_id]) if room.save
+        return unless updated_home.present?
+
+        render json: { status: 'success', home: updated_home },
+               include: %w[home_rooms property]
       end
 
       def update

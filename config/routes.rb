@@ -56,6 +56,7 @@ Rails.application.routes.draw do
       post 'homes', to: 'homes#create'
       patch 'homes/:id', to: 'homes#update'
       delete 'homes/:id', to: 'homes#delete'
+      post 'homes/room', to: 'homes#create_room'
 
       get 'home_rooms', to: 'home_rooms#index'
       get 'home_rooms/:id', to: 'home_rooms#show'
