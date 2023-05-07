@@ -5,8 +5,9 @@ module Api
     class AgentsController < ApplicationController
       before_action :authorize_admin
       def index
-        result = Agent.all
-        render json: { status: 'success', agents: result }
+        result = Agent.includes(:agent_addresses, :agent_contacts, :properties, :property_managers).all
+        render json: { status: 'success', agents: result },
+               include: %w[agent_addresses agent_contacts properties property_managers]
       end
 
       def show
@@ -43,12 +44,12 @@ module Api
 
         if agent_address.save
           result = Agent.includes(:agent_contacts, :agent_addresses,
-                                  :property_managers).find(agent.id)
+                                  :property_managers, :properties).find(agent.id)
         end
 
         if result.present?
           render json: { status: 'success', agent: result },
-                 include: %w[agent_contacts agent_addresses property_managers]
+                 include: %w[agent_contacts agent_addresses property_managers properties]
         end
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }
