@@ -22,7 +22,7 @@ module Api
                                     property_manager_id: params[:property_manager_id])
 
         if property.valid?
-          home = Home.new(property_id: property.id, owner_name: params[:owner_name]) if property.save
+          home = Home.new(property_id: property.id, owner_name: params[:owner_name], agent_id: params[:agent_id], property_manager_id: params[:property_manager_id]) if property.save
 
           address = Address.new if home.save
           address.province = params[:province]
@@ -41,7 +41,7 @@ module Api
       end
 
       # def room_params
-      #   params.require(:home).permit(:width, :length, :windows, :cup_board, :to_sun, :color, :home_id)
+      #   params.require(:home).permit(:width, :lengths, :windows, :cup_board, :to_sun, :color, :home_id)
       # end
 
       def create_room
