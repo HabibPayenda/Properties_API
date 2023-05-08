@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_07_135346) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_08_145905) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -210,7 +210,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_135346) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "property_id", null: false
+    t.bigint "agent_id", null: false
+    t.bigint "property_manager_id", null: false
+    t.index ["agent_id"], name: "index_homes_on_agent_id"
     t.index ["property_id"], name: "index_homes_on_property_id"
+    t.index ["property_manager_id"], name: "index_homes_on_property_manager_id"
   end
 
   create_table "lands", force: :cascade do |t|
@@ -483,7 +487,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_07_135346) do
   add_foreign_key "deals", "deal_infos"
   add_foreign_key "deals", "users"
   add_foreign_key "home_rooms", "homes"
+  add_foreign_key "homes", "agents"
   add_foreign_key "homes", "properties"
+  add_foreign_key "homes", "property_managers"
   add_foreign_key "lands", "properties"
   add_foreign_key "offers", "deal_infos"
   add_foreign_key "offers", "properties"
