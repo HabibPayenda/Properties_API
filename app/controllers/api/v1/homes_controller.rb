@@ -20,10 +20,20 @@ module Api
                                     availability_status: params[:availability_status],
                                     property_type: 'Home', agent_id: params[:agent_id],
                                     property_manager_id: params[:property_manager_id])
-        puts property
-        puts property.id
+
         if property.valid?
-          result = Home.new(property_id: property.id, owner_name: params[:owner_name]) if property.save
+          home = Home.new(property_id: property.id, owner_name: params[:owner_name]) if property.save
+
+          address = Address.new if home.save
+          address.province = params[:province]
+          address.city = params[:city]
+          address.district = params[:district]
+
+          home_address = PropertyAddress.new if address.save
+          home_address.property_id = property.id
+          home_address.address_id = address.id
+          result = Home.includes(:property).find(home.id) if home_address.save
+
           render json: { status: 'success', home: result }, include: ['property'] if result.save
         end
       rescue StandardError
@@ -72,7 +82,7 @@ module Api
 
       def home_params
         params.require(:home).permit(:owner_name, :name, :description, :availability_status, :property_manager_id,
-                                     :agent_id)
+                                     :agent_id, :province, :city, :district)
       end
     end
   end
