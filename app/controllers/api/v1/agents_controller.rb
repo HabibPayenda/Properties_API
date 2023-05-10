@@ -12,7 +12,11 @@ module Api
 
       def show
         result = Agent.includes(:agent_addresses, :agent_contacts, :properties, :property_managers).find(params[:id])
-        render json: { status: 'success', agent: result }, include: %w[agent_addresses agent_contacts properties property_managers] if result.present?
+        if result.present?
+          render json: { status: 'success', agent: result },
+                 include: %w[agent_addresses agent_contacts properties
+                             property_managers]
+        end
       rescue StandardError
         render json: { status: 'failed', info: 'agent not found' }
       end

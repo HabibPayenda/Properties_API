@@ -12,8 +12,13 @@ module Api
       end
 
       def show
-        result = Property.includes(:property_addresses, :property_manager, :deal_infos, :restrictions, :agent, :amenities).find(params[:id])
-        render json: { status: 'success', property: result }, include: ['property_addresses', 'property_manager', 'deal_infos', 'restrictions', 'agent', 'amenities'] if result.present?
+        result = Property.includes(:property_addresses, :property_manager, :deal_infos, :restrictions, :agent,
+                                   :amenities).find(params[:id])
+        if result.present?
+          render json: { status: 'success', property: result },
+                 include: %w[property_addresses property_manager deal_infos restrictions agent
+                             amenities]
+        end
       rescue StandardError
         render json: { status: 'failed', info: 'property not found' }
       end

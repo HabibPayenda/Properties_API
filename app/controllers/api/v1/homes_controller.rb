@@ -21,30 +21,34 @@ module Api
                                     property_type: 'Home', agent_id: params[:agent_id],
                                     property_manager_id: params[:property_manager_id])
 
-        if property.valid?
-          deal_info = DealInfo.new
-          deal_info.property_id = property.id
-          deal_info.duration = params[:duration]
-          deal_info.total_duration = params[:total_duration]
-          deal_info.price_per_duration = params[:price_per_duration]
-          deal_info.total_price = params[:total_price]
+        return unless property.valid?
 
-          home = Home.new(property_id: property.id, owner_name: params[:owner_name], agent_id: params[:agent_id], property_manager_id: params[:property_manager_id]) if deal_info.save
+        deal_info = DealInfo.new
+        deal_info.property_id = property.id
+        deal_info.duration = params[:duration]
+        deal_info.total_duration = params[:total_duration]
+        deal_info.price_per_duration = params[:price_per_duration]
+        deal_info.total_price = params[:total_price]
 
-          address = Address.new if home.save
-          address.province = params[:province]
-          address.city = params[:city]
-          address.district = params[:district]
-
-          home_address = PropertyAddress.new if address.save
-          home_address.property_id = property.id
-          home_address.address_id = address.id
-          result = Home.includes(:property).find(home.id) if home_address.save
-
-          render json: { status: 'success', home: result }, include: ['property'] if result.save
+        if deal_info.save
+          home = Home.new(property_id: property.id, owner_name: params[:owner_name], agent_id: params[:agent_id],
+                          property_manager_id: params[:property_manager_id])
         end
-      # rescue StandardError
-      #   render json: { status: 'failed', info: 'check your data' }
+
+        address = Address.new if home.save
+        address.province = params[:province]
+        address.city = params[:city]
+        address.district = params[:district]
+
+        home_address = PropertyAddress.new if address.save
+        home_address.property_id = property.id
+        home_address.address_id = address.id
+        result = Home.includes(:property).find(home.id) if home_address.save
+
+        render json: { status: 'success', home: result }, include: ['property'] if result.save
+
+        # rescue StandardError
+        #   render json: { status: 'failed', info: 'check your data' }
       end
 
       # def room_params
@@ -93,5 +97,4 @@ module Api
       end
     end
   end
-  end
-
+end
