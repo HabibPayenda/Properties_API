@@ -23,8 +23,8 @@ module Api
 
         if property.valid?
           deal_info = DealInfo.new(property_id: property.id, deal_type: params[:deal_type], duration: params[:duration], price_per_duration: params[:price_per_duration, total_price: params[:total_price], total_duration: params[total_duration]])
-          if deal_info.save
-          home = Home.new(property_id: property.id, owner_name: params[:owner_name], agent_id: params[:agent_id], property_manager_id: params[:property_manager_id]) if property.save
+
+          home = Home.new(property_id: property.id, owner_name: params[:owner_name], agent_id: params[:agent_id], property_manager_id: params[:property_manager_id]) if deal_info.save
 
           address = Address.new if home.save
           address.province = params[:province]
@@ -88,5 +88,5 @@ module Api
       end
     end
   end
-end
+  end
 
