@@ -29,6 +29,7 @@ module Api
         deal_info.total_duration = params[:total_duration]
         deal_info.price_per_duration = params[:price_per_duration]
         deal_info.total_price = params[:total_price]
+        deal_info.deal_type = params[:deal_type]
 
         if deal_info.save
           home = Home.new(property_id: property.id, owner_name: params[:owner_name], agent_id: params[:agent_id],
@@ -69,6 +70,21 @@ module Api
         return unless updated_home.present?
 
         render json: { status: 'success', home: updated_home },
+               include: %w[home_rooms property]
+      end
+
+      def update_room
+        home_room = HomeRoom.find(params[:room_id])
+        if home_room.valid?
+        home_room.windows = params[:windows]
+        home_room.length = params[:length]
+        home_room.width = params[:width]
+        home_room.to_sun = params[:to_sun]
+        home_room.cup_board = params[:cup_board]
+        home_room.color = params[:color]
+        end
+        result = Home.includes(:home_rooms, :property).find(params[:home_id]) if home_room.save
+        render json: { status: 'success', home: result },
                include: %w[home_rooms property]
       end
 
