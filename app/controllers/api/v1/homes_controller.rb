@@ -88,6 +88,34 @@ module Api
                include: %w[home_rooms property]
       end
 
+      def delete_room
+
+        home_room = HomeRoom.find(params[:id])
+        home_id = home_room.home_id
+
+        result = Home.includes(:home_rooms, :property).find(home_id) if home_room.destroy
+        render json: { status: 'success', home: result },
+               include: %w[home_rooms property]
+      end
+
+      def create_amenity
+        property = Property.find(params[:property_id])
+        amenity = Amenity.new
+        amenity.name = params[:name]
+        amenity.description = params[:description]
+        amenity.fee = params[:fee]
+        amenity.fee_duration = params[:fee_duration]
+        amenity.property_id = property.id
+
+        result = Property.includes(:property_addresses, :property_manager, :deal_infos, :restrictions, :agent,
+                                   :amenities).find(params[:property_id]) if amenity.save
+        if result.present?
+          render json: { status: 'success', property: result },
+                 include: %w[property_addresses property_manager deal_infos restrictions agent
+                             amenities]
+        end
+      end
+
       def update
         result = Home.find(params[:id])
         if result.update(home_params)
