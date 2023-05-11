@@ -76,12 +76,12 @@ module Api
       def update_room
         home_room = HomeRoom.find(params[:room_id])
         if home_room.valid?
-        home_room.windows = params[:windows]
-        home_room.length = params[:length]
-        home_room.width = params[:width]
-        home_room.to_sun = params[:to_sun]
-        home_room.cup_board = params[:cup_board]
-        home_room.color = params[:color]
+          home_room.windows = params[:windows]
+          home_room.length = params[:length]
+          home_room.width = params[:width]
+          home_room.to_sun = params[:to_sun]
+          home_room.cup_board = params[:cup_board]
+          home_room.color = params[:color]
         end
         result = Home.includes(:home_rooms, :property).find(params[:home_id]) if home_room.save
         render json: { status: 'success', home: result },
@@ -89,7 +89,6 @@ module Api
       end
 
       def delete_room
-
         home_room = HomeRoom.find(params[:id])
         home_id = home_room.home_id
 
@@ -107,14 +106,17 @@ module Api
         amenity.fee_duration = params[:fee_duration]
         amenity.property_id = property.id
 
-        result = Property.includes(:property_addresses, :property_manager, :deal_infos, :restrictions, :agent,
-                                   :amenities).find(params[:property_id]) if amenity.save
-        if result.present?
-          render json: { status: 'success', property: result },
-                 include: %w[property_addresses property_manager deal_infos restrictions agent
-                             amenities]
+        if amenity.save
+          result = Property.includes(:property_addresses, :property_manager, :deal_infos, :restrictions, :agent,
+                                     :amenities).find(params[:property_id])
         end
+        return unless result.present?
+
+        render json: { status: 'success', property: result },
+               include: %w[property_addresses property_manager deal_infos restrictions agent
+                           amenities]
       end
+
       def creat_restriction
         property = Property.find(params[:property_id])
         restriction = Restriction.new
@@ -122,13 +124,15 @@ module Api
         restriction.description = params[:description]
         restriction.property_id = property.id
 
-        result = Property.includes(:property_addresses, :property_manager, :deal_infos, :restrictions, :agent,
-                                   :amenities).find(params[:property_id]) if restriction.save
-        if result.present?
-          render json: { status: 'success', property: result },
-                 include: %w[property_addresses property_manager deal_infos restrictions agent
-                             amenities]
+        if restriction.save
+          result = Property.includes(:property_addresses, :property_manager, :deal_infos, :restrictions, :agent,
+                                     :amenities).find(params[:property_id])
         end
+        return unless result.present?
+
+        render json: { status: 'success', property: result },
+               include: %w[property_addresses property_manager deal_infos restrictions agent
+                           amenities]
       end
 
       def update
@@ -136,55 +140,56 @@ module Api
         home.owner_name = params[:owner_name]
 
         if home.valid?
-        property = Property.find(home.property_id)
-        property.name = params[:name]
-        property.description = params[:description]
-        property.availability_status = params[:availability_status]
-        property.property_manager_id = params[:property_manager_id]
-        property.agent_id = params[:agent_id]
+          property = Property.find(home.property_id)
+          property.name = params[:name]
+          property.description = params[:description]
+          property.availability_status = params[:availability_status]
+          property.property_manager_id = params[:property_manager_id]
+          property.agent_id = params[:agent_id]
         end
 
         address = Address.find(property.addresses[0].id) if property.save
         if address.valid?
-        address.province = params[:province]
-        address.city = params[:city]
-        address.district = params[:district]
+          address.province = params[:province]
+          address.city = params[:city]
+          address.district = params[:district]
         end
 
         deal_info = DealInfo.find(property.deal_infos[0].id) if address.save
 
         if deal_info.valid?
-        deal_info.deal_type = params[:deal_type]
-        deal_info.price_per_duration = params[:price_per_duration]
-        deal_info.total_price = params[:total_price]
-        deal_info.duration = params[:duration]
-        deal_info.total_duration = params[:total_duration]
+          deal_info.deal_type = params[:deal_type]
+          deal_info.price_per_duration = params[:price_per_duration]
+          deal_info.total_price = params[:total_price]
+          deal_info.duration = params[:duration]
+          deal_info.total_duration = params[:total_duration]
         end
 
         updated_home = Home.includes(:property).find(params[:id]) if deal_info.save
-        updated_property = Property.includes(:property_addresses, :addresses, :property_manager, :deal_infos, :restrictions, :agent,
-                                             :amenities).find(updated_home.property_id) if updated_home.present?
-        render json: {
+        if updated_home.present?
+          updated_property = Property.includes(:property_addresses, :addresses, :property_manager, :deal_infos, :restrictions, :agent,
+                                               :amenities).find(updated_home.property_id)
+        end
+        if updated_property.present?
+          render json: {
             status: 'success',
             property: updated_property.as_json(include: {
-                property_manager: {},
-                agent: {},
-                amenities: {},
-                property_addresses: {},
-                addresses: {},
-                deal_infos: {},
-                restrictions: {},
-                amenities: {}
+                                                 property_manager: {},
+                                                 agent: {},
+                                                 amenities: {},
+                                                 property_addresses: {},
+                                                 addresses: {},
+                                                 deal_infos: {},
+                                                 restrictions: {},
+                                                 amenities: {}
 
-            }),
+                                               }),
             home: updated_home.as_json(include: :property)
-        } if updated_property.present?
-
-
+          }
+        end
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }
-
-        end
+      end
 
       def delete
         result = Home.find(params[:id])
@@ -201,4 +206,4 @@ module Api
       end
     end
   end
-  end
+end

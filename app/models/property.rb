@@ -9,5 +9,5 @@ class Property < ApplicationRecord
   has_many :deal_infos, dependent: :destroy
 
   has_many :property_addresses, dependent: :destroy
-  has_many :addresses , through: :property_addresses
+  has_many :addresses, through: :property_addresses
 end
