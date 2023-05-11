@@ -60,6 +60,7 @@ Rails.application.routes.draw do
       patch 'homes/room/:id', to: 'homes#update_room'
       delete 'homes/room/:id', to: 'homes#delete_room'
       post 'homes/amenity', to: 'homes#create_amenity'
+      post 'homes/restriction', to: 'homes#creat_restriction'
 
       get 'home_rooms', to: 'home_rooms#index'
       get 'home_rooms/:id', to: 'home_rooms#show'

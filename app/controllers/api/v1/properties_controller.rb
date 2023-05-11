@@ -12,15 +12,19 @@ module Api
       end
 
       def show
-        result = Property.includes(:property_addresses, :property_manager, :deal_infos, :restrictions, :agent,
+        @result = Property.includes(:property_addresses, :addresses, :property_manager, :deal_infos, :restrictions, :agent,
                                    :amenities).find(params[:id])
-        if result.present?
-          render json: { status: 'success', property: result },
-                 include: %w[property_addresses property_manager deal_infos restrictions agent
+        # address_id = @result.property_addresses[0].address_id if @result.present?
+        # address = Address.find(address_id)
+        #
+        # if address.present?
+        #   @result.instance_variable_set(:@property_address, address)
+          render json: { status: 'success', property: @result },
+                 include: %w[property_addresses addresses property_manager deal_infos restrictions agent
                              amenities]
-        end
-      rescue StandardError
-        render json: { status: 'failed', info: 'property not found' }
+        # end
+      # rescue StandardError
+      #   render json: { status: 'failed', info: 'property not found' }
       end
 
       def create

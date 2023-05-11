@@ -115,6 +115,21 @@ module Api
                              amenities]
         end
       end
+      def creat_restriction
+        property = Property.find(params[:property_id])
+        restriction = Restriction.new
+        restriction.name = params[:name]
+        restriction.description = params[:description]
+        restriction.property_id = property.id
+
+        result = Property.includes(:property_addresses, :property_manager, :deal_infos, :restrictions, :agent,
+                                   :amenities).find(params[:property_id]) if restriction.save
+        if result.present?
+          render json: { status: 'success', property: result },
+                 include: %w[property_addresses property_manager deal_infos restrictions agent
+                             amenities]
+        end
+      end
 
       def update
         result = Home.find(params[:id])
