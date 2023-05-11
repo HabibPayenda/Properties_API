@@ -132,14 +132,59 @@ module Api
       end
 
       def update
-        result = Home.find(params[:id])
-        if result.update(home_params)
-          render json: { status: 'success',
-                         home: result }
+        home = Home.find(params[:id])
+        home.owner_name = params[:owner_name]
+
+        if home.valid?
+        property = Property.find(home.property_id)
+        property.name = params[:name]
+        property.description = params[:description]
+        property.availability_status = params[:availability_status]
+        property.property_manager_id = params[:property_manager_id]
+        property.agent_id = params[:agent_id]
         end
+
+        address = Address.find(property.addresses[0].id) if property.save
+        if address.valid?
+        address.province = params[:province]
+        address.city = params[:city]
+        address.district = params[:district]
+        end
+
+        deal_info = DealInfo.find(property.deal_infos[0].id) if address.save
+
+        if deal_info.valid?
+        deal_info.deal_type = params[:deal_type]
+        deal_info.price_per_duration = params[:price_per_duration]
+        deal_info.total_price = params[:total_price]
+        deal_info.duration = params[:duration]
+        deal_info.total_duration = params[:total_duration]
+        end
+
+        updated_home = Home.includes(:property).find(params[:id]) if deal_info.save
+        updated_property = Property.includes(:property_addresses, :addresses, :property_manager, :deal_infos, :restrictions, :agent,
+                                             :amenities).find(updated_home.property_id) if updated_home.present?
+        render json: {
+            status: 'success',
+            property: updated_property.as_json(include: {
+                property_manager: {},
+                agent: {},
+                amenities: {},
+                property_addresses: {},
+                addresses: {},
+                deal_infos: {},
+                restrictions: {},
+                amenities: {}
+
+            }),
+            home: updated_home.as_json(include: :property)
+        } if updated_property.present?
+
+
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }
-      end
+
+        end
 
       def delete
         result = Home.find(params[:id])
@@ -156,4 +201,4 @@ module Api
       end
     end
   end
-end
+  end
