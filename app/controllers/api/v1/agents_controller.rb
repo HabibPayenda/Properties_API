@@ -86,7 +86,6 @@ module Api
                  include: %w[addresses contact properties
                              property_managers]
         end
-
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }
       end
