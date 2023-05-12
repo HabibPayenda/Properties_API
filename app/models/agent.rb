@@ -6,6 +6,6 @@ class Agent < ApplicationRecord
   belongs_to :admin
   has_many :agent_addresses
   has_many :addresses, through: :agent_addresses
-  has_many :agent_contacts
-  has_many :contacts, through: :agent_contacts
+  has_one :agent_contact
+  has_one :contact, through: :agent_contact
 end

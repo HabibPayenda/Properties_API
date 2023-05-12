@@ -5,16 +5,16 @@ module Api
     class AgentsController < ApplicationController
       before_action :authorize_admin
       def index
-        result = Agent.includes(:agent_addresses, :agent_contacts, :properties, :property_managers).all
+        result = Agent.includes(:addresses, :contact, :properties, :property_managers).all
         render json: { status: 'success', agents: result },
-               include: %w[agent_addresses agent_contacts properties property_managers]
+               include: %w[addresses contact properties property_managers]
       end
 
       def show
-        result = Agent.includes(:agent_addresses, :agent_contacts, :properties, :property_managers).find(params[:id])
+        result = Agent.includes(:addresses, :contact, :properties, :property_managers).find(params[:id])
         if result.present?
           render json: { status: 'success', agent: result },
-                 include: %w[agent_addresses agent_contacts properties
+                 include: %w[addresses contact properties
                              property_managers]
         end
       rescue StandardError
