@@ -98,6 +98,13 @@ module Api
         render json: { status: 'failed', info: 'check your data' }
       end
 
+      def get_properties
+        homes_result = Home.includes(:property, :home_rooms).all.where('agent_id': params[:id]).order('created_at')
+        cars_result = Car.includes(:property).all.where('agent_id': params[:id]).order('created_at')
+        render json: { status: 'success', homes: homes_result.as_json(include: { property: {}, home_rooms: [] }),
+                       cars: cars_result.as_json(include: { property: {} }) }
+      end
+
       private
 
       def agent_params

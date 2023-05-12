@@ -146,6 +146,7 @@ Rails.application.routes.draw do
       post 'agents', to: 'agents#create'
       patch 'agents/:id', to: 'agents#update'
       delete 'agents/:id', to: 'agents#delete'
+      get 'agents/properties/:id', to: 'agents#get_properties'
 
       get 'deals', to: 'deals#index'
       get 'deals/:id', to: 'deals#show'
