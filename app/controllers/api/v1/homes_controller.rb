@@ -176,7 +176,6 @@ module Api
             property: updated_property.as_json(include: {
                                                  property_manager: {},
                                                  agent: {},
-                                                 amenities: {},
                                                  property_addresses: {},
                                                  addresses: {},
                                                  deal_infos: {},
@@ -193,7 +192,7 @@ module Api
 
       def delete
         result = Home.find(params[:id])
-        render json: { status: 'success', home: result } if result.delete
+        render json: { status: 'success', home: result } if result.destroy
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }
       end
