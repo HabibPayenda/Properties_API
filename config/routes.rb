@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       post 'property_managers', to: 'property_managers#create'
       patch 'property_managers/:id', to: 'property_managers#updata'
       delete 'property_managers/:id', to: 'property_managers#delete'
+      get 'property_managers/properties/:id', to: 'property_managers#get_properties'
 
       get 'contacts', to: 'contacts#index'
       get 'contact/:id', to: 'contacts#show'
