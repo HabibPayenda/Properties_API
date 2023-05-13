@@ -20,8 +20,32 @@ module Api
       end
 
       def create
-        result = PropertyManager.new(property_manager_params)
-        render json: { status: 'success', property_manager: result } if result.save
+        property_manager = PropertyManager.new
+        property_manager.name = params[:name]
+        property_manager.status = params[:status]
+        property_manager.company_name = params[:company_name]
+        property_manager.agent_id = params[:agent_id]
+
+        address = Address.new if property_manager.save
+        address.province = params[:province]
+        address.city = params[:city]
+        address.district = params[:district]
+
+        property_manager_address = PropertyManagerAddress.new if address.save
+        property_manager_address.address_id = address.id
+        property_manager_address.property_manager_id = property_manager.id
+
+        contact = Contact.new if property_manager_address.save
+        contact.email_one = params[:email_one]
+        contact.phone_number_one = params[:phone_number_one]
+
+        property_manager_contact = PropertyManagerContact.new if contact.save
+        property_manager_contact.property_manager_id = property_manager.id
+        property_manager_contact.contact_id = contact.id
+
+        result = PropertyManager.includes(:properties, :contact, :addresses, :reviews).find(property_manager.id) if property_manager_contact.save
+
+        render json: { status: 'success', property_manager: result }, include: ['properties', 'contact', 'addresses', 'reviews'] if result.present?
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }
       end
@@ -50,8 +74,9 @@ module Api
       private
 
       def property_manager_params
-        params.require(:property_manager).permit(:name, :company_name, :status, :agent_id)
+        params.require(:property_manager).permit(:name, :company_name, :status, :agent_id, :province, :city, :district, :phone_number_one, :email_one)
       end
     end
   end
 end
+
