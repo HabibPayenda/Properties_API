@@ -43,9 +43,15 @@ module Api
         property_manager_contact.property_manager_id = property_manager.id
         property_manager_contact.contact_id = contact.id
 
-        result = PropertyManager.includes(:properties, :contact, :addresses, :reviews).find(property_manager.id) if property_manager_contact.save
+        if property_manager_contact.save
+          result = PropertyManager.includes(:properties, :contact, :addresses,
+                                            :reviews).find(property_manager.id)
+        end
 
-        render json: { status: 'success', property_manager: result }, include: ['properties', 'contact', 'addresses', 'reviews'] if result.present?
+        if result.present?
+          render json: { status: 'success', property_manager: result },
+                 include: %w[properties contact addresses reviews]
+        end
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }
       end
@@ -65,7 +71,8 @@ module Api
       end
 
       def get_properties
-        homes_result = Home.includes(:property, :home_rooms).all.where('property_manager_id': params[:id]).order('created_at')
+        homes_result = Home.includes(:property,
+                                     :home_rooms).all.where('property_manager_id': params[:id]).order('created_at')
         cars_result = Car.includes(:property).all.where('property_manager_id': params[:id]).order('created_at')
         render json: { status: 'success', homes: homes_result.as_json(include: { property: {}, home_rooms: [] }),
                        cars: cars_result.as_json(include: { property: {} }) }
@@ -74,9 +81,9 @@ module Api
       private
 
       def property_manager_params
-        params.require(:property_manager).permit(:name, :company_name, :status, :agent_id, :province, :city, :district, :phone_number_one, :email_one)
+        params.require(:property_manager).permit(:name, :company_name, :status, :agent_id, :province, :city, :district,
+                                                 :phone_number_one, :email_one)
       end
     end
   end
 end
-
