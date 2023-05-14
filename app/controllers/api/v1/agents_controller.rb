@@ -27,6 +27,7 @@ module Api
         agent.hire_date = params[:hire_date]
         agent.admin_id = params[:admin_id]
         agent.status = params[:status]
+        agent.image = params[:image]
 
         contact = Contact.new if agent.save
         contact.email_one = params[:email_one]
@@ -108,7 +109,7 @@ module Api
 
       def agent_params
         params.require(:agent).permit(:name, :hire_date, :status, :admin_id, :province, :city, :district,
-                                      :phone_number_one, :email_one)
+                                      :phone_number_one, :email_one, :image)
       end
     end
   end

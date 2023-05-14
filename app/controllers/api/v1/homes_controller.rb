@@ -16,9 +16,6 @@ module Api
       end
 
       def create
-        puts "***************************"
-        puts params
-        puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
         property = Property.create!(name: params[:name], description: params[:description],
                                     availability_status: params[:availability_status],
                                     property_type: 'Home', agent_id: params[:agent_id],
