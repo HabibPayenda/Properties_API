@@ -9,4 +9,17 @@ class PropertyManager < ApplicationRecord
   has_many :property_manager_reviews
   has_many :reviews, through: :property_manager_reviews
   belongs_to :agent
+
+  has_one_attached :image
+
+  after_create_commit do
+    set_image_url
+  end
+
+  private
+
+  def set_image_url
+    self.image_url = self.image.url
+    self.save
+  end
 end

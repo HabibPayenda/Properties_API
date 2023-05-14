@@ -25,6 +25,7 @@ module Api
         property_manager.status = params[:status]
         property_manager.company_name = params[:company_name]
         property_manager.agent_id = params[:agent_id]
+        property_manager.image = params[:image]
 
         address = Address.new if property_manager.save
         address.province = params[:province]
@@ -82,7 +83,7 @@ module Api
 
       def property_manager_params
         params.require(:property_manager).permit(:name, :company_name, :status, :agent_id, :province, :city, :district,
-                                                 :phone_number_one, :email_one)
+                                                 :phone_number_one, :email_one, :image)
       end
     end
   end
