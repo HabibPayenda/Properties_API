@@ -16,10 +16,14 @@ module Api
       end
 
       def create
+        puts "***************************"
+        puts params
+        puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
         property = Property.create!(name: params[:name], description: params[:description],
                                     availability_status: params[:availability_status],
                                     property_type: 'Home', agent_id: params[:agent_id],
-                                    property_manager_id: params[:property_manager_id])
+                                    property_manager_id: params[:property_manager_id], image: params[:image], image_url: '')
+
 
         return unless property.valid?
 
@@ -45,6 +49,7 @@ module Api
         home_address.property_id = property.id
         home_address.address_id = address.id
         result = Home.includes(:property).find(home.id) if home_address.save
+
 
         render json: { status: 'success', home: result }, include: ['property'] if result.save
 
@@ -201,7 +206,7 @@ module Api
 
       def home_params
         params.require(:home).permit(:owner_name, :name, :description, :availability_status, :property_manager_id,
-                                     :agent_id, :province, :city, :district, :deal_type, :duration, :price_per_duration, :total_price, :total_duration)
+                                     :agent_id, :province, :city, :district, :deal_type, :duration, :price_per_duration, :total_price, :total_duration, :image)
       end
     end
   end

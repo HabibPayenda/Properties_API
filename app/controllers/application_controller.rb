@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
+  include ActiveStorage::SetCurrent
+
   def encode_token(payload)
     JWT.encode(payload, 'secret')
   end
