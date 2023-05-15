@@ -13,13 +13,13 @@ module Api
         result = User.includes(:contact, :address, :user_views, :reviews, :user_favorites, :user_searches).find(params[:id])
         if result.present?
           render json: { status: 'success', user: result.as_json(include: {
-              contact: {},
-              address: {},
-              user_views: [],
-              reviews: [],
-              user_favorites: [],
-              user_searches: []
-          }) }
+                                                                   contact: {},
+                                                                   address: {},
+                                                                   user_views: [],
+                                                                   reviews: [],
+                                                                   user_favorites: [],
+                                                                   user_searches: []
+                                                                 }) }
         end
       rescue StandardError
         render json: { status: 'failed', info: 'user not found' }
@@ -61,13 +61,40 @@ module Api
                                                                    user_searches: []
                                                                  }) }
         end
-      # rescue StandardError
-      #   render json: { status: 'failed', info: 'check your data' }
+      rescue StandardError
+        render json: { status: 'failed', info: 'check your data' }
       end
 
       def update
-        result = User.find(params[:id])
-        render json: { status: 'success', user: result } if result.update(user_params)
+        user = User.find(params[:id])
+        user.name = params[:name]
+        user.password = params[:password]
+        user.gender = params[:gender]
+        user.date_of_birth = params[:date_of_birth]
+        user.image = params[:image]
+        user.image_url = user.image.url
+
+        address = user.address if user.save
+        address.province = params[:province]
+        address.city = params[:city]
+        address.district = params[:district]
+        
+
+        contact = user.contact if address.save
+        contact.phone_number_one = params[:phone_number_one]
+        contact.email_one = params[:email_one]
+
+        result = User.includes(:contact, :address, :user_views, :reviews, :user_favorites, :user_searches).find(user.id) if contact.save
+        if result.present?
+          render json: { status: 'success', user: result.as_json(include: {
+                                                                   contact: {},
+                                                                   address: {},
+                                                                   user_views: [],
+                                                                   reviews: [],
+                                                                   user_favorites: [],
+                                                                   user_searches: []
+                                                                 }) }
+        end
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }
       end
