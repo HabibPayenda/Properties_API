@@ -10,7 +10,20 @@ module Api
 
       def show
         result = Home.includes(:home_rooms, :property).find(params[:id])
-        render json: { status: 'success', home: result }, include: %w[home_rooms property] if result.present?
+        if result.present?
+          render json: { status: 'success', home: result.as_json(include: {
+                                                                   home_rooms: [],
+                                                                   property: {
+                                                                     include: {
+                                                                       image: {
+                                                                         include: {
+                                                                           blob: {}
+                                                                         }
+                                                                       }
+                                                                     }
+                                                                   }
+                                                                 }) }
+        end
       rescue StandardError
         render json: { status: 'failed', info: 'home not found' }
       end
