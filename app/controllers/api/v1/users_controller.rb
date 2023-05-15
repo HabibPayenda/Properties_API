@@ -10,22 +10,59 @@ module Api
       end
 
       def show
-        result = User.includes(:user_reviews, :user_views, :user_searches, :user_favorites, :user_contact,
-                               :user_addresses).find(params[:id])
+        result = User.includes(:contact, :address, :user_views, :reviews, :user_favorites, :user_searches).find(params[:id])
         if result.present?
-          render json: { status: 'success', user: result },
-                 include: %w[user_reviews user_views user_searches user_favorites user_contact
-                             user_addresses]
+          render json: { status: 'success', user: result.as_json(include: {
+              contact: {},
+              address: {},
+              user_views: [],
+              reviews: [],
+              user_favorites: [],
+              user_searches: []
+          }) }
         end
       rescue StandardError
         render json: { status: 'failed', info: 'user not found' }
       end
 
       def create
-        result = User.new(user_params)
-        render json: { status: 'success', user: result } if result.save
-      rescue StandardError
-        render json: { status: 'failed', info: 'check your data' }
+        user = User.new
+        user.name = params[:name]
+        user.password = params[:password]
+        user.gender = params[:gender]
+        user.date_of_birth = params[:date_of_birth]
+        user.image = params[:image]
+
+        address = Address.new if user.save
+        address.province = params[:province]
+        address.city = params[:city]
+        address.district = params[:district]
+
+        user_address = UserAddress.new if address.save
+        user_address.user_id = user.id
+        user_address.address_id = address.id
+
+        contact = Contact.new if user_address.save
+        contact.phone_number_one = params[:phone_number_one]
+        contact.email_one = params[:email_one]
+
+        user_contact = UserContact.new if contact.save
+        user_contact.user_id = user.id
+        user_contact.contact_id = contact.id
+
+        result = User.includes(:contact, :address, :user_views, :reviews, :user_favorites, :user_searches).find(user.id) if user_contact.save
+        if result.present?
+          render json: { status: 'success', user: result.as_json(include: {
+                                                                   contact: {},
+                                                                   address: {},
+                                                                   user_views: [],
+                                                                   reviews: [],
+                                                                   user_favorites: [],
+                                                                   user_searches: []
+                                                                 }) }
+        end
+      # rescue StandardError
+      #   render json: { status: 'failed', info: 'check your data' }
       end
 
       def update
@@ -45,7 +82,7 @@ module Api
       private
 
       def user_params
-        params.require(:user).permit(:name, :password, :date_of_birth, :gender, :push_token, :last_login, :image)
+        params.require(:user).permit(:name, :password, :date_of_birth, :gender, :push_token, :last_login, :image, :province, :city, :district, :phone_number_one, :email_one)
       end
     end
   end
