@@ -11,10 +11,10 @@ module Api
       end
 
       def show
-        result = Agent.includes(:addresses, :contact, :properties, :property_managers).find(params[:id])
+        result = Agent.includes(:address, :contact, :properties, :property_managers).find(params[:id])
         if result.present?
           render json: { status: 'success', agent: result },
-                 include: %w[addresses contact properties
+                 include: %w[address contact properties
                              property_managers]
         end
       rescue StandardError
@@ -48,13 +48,13 @@ module Api
         agent_address.address_id = address.id
 
         if agent_address.save
-          result = Agent.includes(:agent_contact, :agent_addresses,
+          result = Agent.includes(:agent_contact, :address,
                                   :property_managers, :properties).find(agent.id)
         end
 
         if result.present?
           render json: { status: 'success', agent: result },
-                 include: %w[agent_contact agent_addresses property_managers properties]
+                 include: %w[agent_contact address property_managers properties]
         end
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }
@@ -81,10 +81,10 @@ module Api
           contact.phone_number_one = params[:phone_number_one]
           contact.email_one = params[:email_one]
         end
-        result = Agent.includes(:addresses, :contact, :properties, :property_managers).find(params[:id]) if contact.save
+        result = Agent.includes(:address, :contact, :properties, :property_managers).find(params[:id]) if contact.save
         if result.present?
           render json: { status: 'success', agent: result },
-                 include: %w[addresses contact properties
+                 include: %w[address contact properties
                              property_managers]
         end
       rescue StandardError
