@@ -5,9 +5,9 @@ module Api
     class AgentsController < ApplicationController
       before_action :authorize_admin
       def index
-        result = Agent.includes(:addresses, :contact, :properties, :property_managers).order(:created_at).all
+        result = Agent.includes(:address, :contact, :properties, :property_managers).order(:created_at).all
         render json: { status: 'success', agents: result },
-               include: %w[addresses contact properties property_managers]
+               include: %w[address contact properties property_managers]
       end
 
       def show
