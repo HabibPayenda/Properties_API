@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PropertySerializer
   include JSONAPI::Serializer
   attributes :id, :owner_name, :description, :availability_status, :property_manager_id, :agent_id

@@ -19,7 +19,7 @@ class PropertyManager < ApplicationRecord
   private
 
   def set_image_url
-    self.image_url = self.image.url
-    self.save
+    self.image_url = image.url
+    save
   end
 end

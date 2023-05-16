@@ -10,7 +10,8 @@ module Api
       end
 
       def show
-        result = User.includes(:contact, :address, :user_views, :reviews, :user_favorites, :user_searches).find(params[:id])
+        result = User.includes(:contact, :address, :user_views, :reviews, :user_favorites,
+                               :user_searches).find(params[:id])
         if result.present?
           render json: { status: 'success', user: result.as_json(include: {
                                                                    contact: {},
@@ -50,7 +51,10 @@ module Api
         user_contact.user_id = user.id
         user_contact.contact_id = contact.id
 
-        result = User.includes(:contact, :address, :user_views, :reviews, :user_favorites, :user_searches).find(user.id) if user_contact.save
+        if user_contact.save
+          result = User.includes(:contact, :address, :user_views, :reviews, :user_favorites,
+                                 :user_searches).find(user.id)
+        end
         if result.present?
           render json: { status: 'success', user: result.as_json(include: {
                                                                    contact: {},
@@ -78,13 +82,16 @@ module Api
         address.province = params[:province]
         address.city = params[:city]
         address.district = params[:district]
-        
+
 
         contact = user.contact if address.save
         contact.phone_number_one = params[:phone_number_one]
         contact.email_one = params[:email_one]
 
-        result = User.includes(:contact, :address, :user_views, :reviews, :user_favorites, :user_searches).find(user.id) if contact.save
+        if contact.save
+          result = User.includes(:contact, :address, :user_views, :reviews, :user_favorites,
+                                 :user_searches).find(user.id)
+        end
         if result.present?
           render json: { status: 'success', user: result.as_json(include: {
                                                                    contact: {},
@@ -109,7 +116,8 @@ module Api
       private
 
       def user_params
-        params.require(:user).permit(:name, :password, :date_of_birth, :gender, :push_token, :last_login, :image, :province, :city, :district, :phone_number_one, :email_one)
+        params.require(:user).permit(:name, :password, :date_of_birth, :gender, :push_token, :last_login, :image,
+                                     :province, :city, :district, :phone_number_one, :email_one)
       end
     end
   end

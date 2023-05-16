@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HomeSerializer
   include JSONAPI::Serializer
   attributes :id, :owner_name, :created_at, :updated_at

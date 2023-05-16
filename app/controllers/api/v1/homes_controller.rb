@@ -161,28 +161,26 @@ module Api
           updated_property = Property.includes(:property_addresses, :offer, :addresses, :property_manager, :deal_infos, :restrictions, :agent,
                                                :amenities).find(updated_home.property_id)
         end
-        if updated_property.present?
-          render json: {
-              status: 'success',
-              property: updated_property.as_json(include: {
-                  property_manager: {},
-                  agent: {},
-                  property_addresses: {},
-                  addresses: {},
-                  deal_infos: {},
-                  restrictions: {},
-                  amenities: {},
-                  offer: {}
+        return unless updated_property.present?
 
-              }),
-              home: updated_home.as_json(include: {
-                  property: {},
-                  offer: {}
-              })
-          }
-        end
+        render json: {
+          status: 'success',
+          property: updated_property.as_json(include: {
+                                               property_manager: {},
+                                               agent: {},
+                                               property_addresses: {},
+                                               addresses: {},
+                                               deal_infos: {},
+                                               restrictions: {},
+                                               amenities: {},
+                                               offer: {}
 
-
+                                             }),
+          home: updated_home.as_json(include: {
+                                       property: {},
+                                       offer: {}
+                                     })
+        }
       end
 
       def update
