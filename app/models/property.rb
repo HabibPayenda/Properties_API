@@ -11,6 +11,8 @@ class Property < ApplicationRecord
   has_many :property_addresses, dependent: :destroy
   has_many :addresses, through: :property_addresses
 
+  has_one :offer
+
   has_one_attached :image
   after_create_commit do
     set_image_url

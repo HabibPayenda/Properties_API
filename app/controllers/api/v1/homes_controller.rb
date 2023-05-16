@@ -9,19 +9,12 @@ module Api
       end
 
       def show
-        result = Home.includes(:home_rooms, :property).find(params[:id])
+        result = Home.includes(:home_rooms, :property, :offer).find(params[:id])
         if result.present?
           render json: { status: 'success', home: result.as_json(include: {
                                                                    home_rooms: [],
-                                                                   property: {
-                                                                     include: {
-                                                                       image: {
-                                                                         include: {
-                                                                           blob: {}
-                                                                         }
-                                                                       }
-                                                                     }
-                                                                   }
+                                                                   property: {},
+                                                                   offer: {}
                                                                  }) }
         end
       rescue StandardError
@@ -150,6 +143,48 @@ module Api
                            amenities]
       end
 
+      def create_offer
+        property = Property.find(params[:id])
+
+        offer = Offer.new if property.present?
+
+        offer.description = params[:description]
+        offer.title = params[:title]
+        offer.property_id = property.id
+        offer.deal_info_id = params[:deal_info_id]
+        offer.start_date = params[:start_date]
+        offer.end_date = params[:end_date]
+        offer.offer_price = params[:offer_price]
+
+        updated_home = Home.includes(:property, :offer).find(params[:home_id]) if offer.save
+        if updated_home.present?
+          updated_property = Property.includes(:property_addresses, :offer, :addresses, :property_manager, :deal_infos, :restrictions, :agent,
+                                               :amenities).find(updated_home.property_id)
+        end
+        if updated_property.present?
+          render json: {
+              status: 'success',
+              property: updated_property.as_json(include: {
+                  property_manager: {},
+                  agent: {},
+                  property_addresses: {},
+                  addresses: {},
+                  deal_infos: {},
+                  restrictions: {},
+                  amenities: {},
+                  offer: {}
+
+              }),
+              home: updated_home.as_json(include: {
+                  property: {},
+                  offer: {}
+              })
+          }
+        end
+
+
+      end
+
       def update
         home = Home.find(params[:id])
         home.owner_name = params[:owner_name]
@@ -216,7 +251,7 @@ module Api
 
       def home_params
         params.require(:home).permit(:owner_name, :name, :description, :availability_status, :property_manager_id,
-                                     :agent_id, :province, :city, :district, :deal_type, :duration, :price_per_duration, :total_price, :total_duration, :image)
+                                     :agent_id, :province, :city, :district, :deal_type, :duration, :price_per_duration, :total_price, :total_duration, :image, :title, :start_date, :end_date, :offer_price, :home_id, :property_id, :deal_info_id)
       end
     end
   end

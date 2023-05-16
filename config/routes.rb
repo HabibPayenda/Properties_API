@@ -62,6 +62,8 @@ Rails.application.routes.draw do
       delete 'homes/room/:id', to: 'homes#delete_room'
       post 'homes/amenity', to: 'homes#create_amenity'
       post 'homes/restriction', to: 'homes#creat_restriction'
+      post 'homes/add_offer/:id', to: 'homes#create_offer'
+
 
       get 'home_rooms', to: 'home_rooms#index'
       get 'home_rooms/:id', to: 'home_rooms#show'
