@@ -156,7 +156,12 @@ module Api
         offer.end_date = params[:end_date]
         offer.offer_price = params[:offer_price]
 
-        updated_home = Home.includes(:property, :offer).find(params[:home_id]) if offer.save
+        home_offer = HomeOffer.new if offer.save
+        home_offer.home_id = params[:home_id]
+        home_offer.offer_id = offer.id
+
+
+        updated_home = Home.includes(:property, :offer).find(params[:home_id]) if home_offer.save
         if updated_home.present?
           updated_property = Property.includes(:property_addresses, :offer, :addresses, :property_manager, :deal_infos, :restrictions, :agent,
                                                :amenities).find(updated_home.property_id)
