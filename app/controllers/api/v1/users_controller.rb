@@ -23,7 +23,7 @@ module Api
                                                                  }) }
         end
       rescue StandardError
-        render json: { status: 'failed', info: 'user not found' }
+        render json: { status: 'failed', info: 'user not not found' }
       end
 
       def create
@@ -115,7 +115,7 @@ module Api
 
       def recent_users
         result = User.includes(:contact, :address, :user_views, :reviews, :user_favorites,
-                      :user_searches).all.order(create_at: :desc)
+                               :user_searches).all.order(created_at: :desc).limit(10)
 
 
         render json: { status: 'success', users: result.as_json(include: {
