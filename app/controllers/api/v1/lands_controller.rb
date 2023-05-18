@@ -52,7 +52,7 @@ module Api
         deal_info.duration = params[:duration]
         deal_info.total_duration = params[:total_duration]
 
-        result = Land.includes(:property, :agent, :property_manager, :offer, :address, :deal_info).find(land.id)
+        result = Land.includes(:property, :agent, :property_manager, :offer, :address, :deal_info).find(land.id) if deal_info.save
         render json: { status: 'success', land: result.as_json(include: {
             property: {},
             agent: {},
