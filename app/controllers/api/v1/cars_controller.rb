@@ -68,9 +68,9 @@ module Api
                                                                 address: {},
                                                                 deal_info: {}
                                                               }) }
-        
-      # rescue StandardError
-      #   render json: { status: 'failed', info: 'check your data' }
+
+        # rescue StandardError
+        #   render json: { status: 'failed', info: 'check your data' }
       end
 
       def update
@@ -101,4 +101,3 @@ module Api
     end
   end
 end
-

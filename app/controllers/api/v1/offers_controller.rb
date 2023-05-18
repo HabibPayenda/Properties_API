@@ -8,7 +8,8 @@ module Api
         car_offers = CarOffer.includes(:offer).all
         land_offers = LandOffer.includes(:offer).all
 
-        render json: { status: 'success', home_offers: home_offers.as_json(include: :offer), car_offers: car_offers.as_json(include: :offer), land_offers: land_offers.as_json(include: :offer)  }
+        render json: { status: 'success', home_offers: home_offers.as_json(include: :offer),
+                       car_offers: car_offers.as_json(include: :offer), land_offers: land_offers.as_json(include: :offer) }
       end
 
       def show
