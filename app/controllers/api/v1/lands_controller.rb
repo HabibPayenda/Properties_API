@@ -18,8 +18,46 @@ module Api
       def create
         property = Property.new
         property.property_type = 'land'
+        property.image = params[:image]
+        property.image_url = property.image.url
+        property.name = params[:name]
+        property.description = params[:description]
+        property.availability_status = params[:availability_status]
+        property.agent_id = params[:agent_id]
+        property.property_manager_id = params[:property_manager_id]
 
-        render json: { status: 'success', land: result } if result.save
+        address = Address.new if property.save
+        address.province = params[:province]
+        address.city = params[:city]
+        address.district = params[:district]
+
+        property_address = PropertyAddress.new if address.save
+        property_address.address_id = address.id
+        property_address.property_id = property.id
+
+        land = Land.new if property_address.save
+        land.area = params[:area]
+        land.zone = params[:zone]
+        land.current_use = params[:current_use]
+        land.property_id = property.id
+
+        deal_info = DealInfo.new if land.save
+        deal_info.property_id = property.id
+        deal_info.price_per_duration = params[:price_per_duration]
+        deal_info.total_price = params[:total_price]
+        deal_info.duration = params[:duration]
+        deal_info.total_duration = params[:total_duration]
+
+        result = Land.includes(:property, :agent, :offer, :address, :deal_info).find(land.id)
+        render json: { status: 'success', land: result.as_json(include: {
+            property: {},
+            agent: {},
+            offer: {},
+            address: {},
+            deal_info: {}
+        }) }
+
+
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }
       end
@@ -44,7 +82,8 @@ module Api
       private
 
       def land_params
-        params.require(:land).permit(:area, :zone, :current_use, :property_id)
+        params.require(:land).permit(:area, :zone, :current_use, :property_id, :name, :description, :availability_status, :property_manager_id,
+            :agent_id, :province, :city, :district, :deal_type, :duration, :price_per_duration, :total_price, :total_duration, :image, :title, :start_date, :end_date, :offer_price, :home_id, :property_id, :deal_info_id)
       end
     end
   end
