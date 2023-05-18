@@ -16,7 +16,9 @@ module Api
       end
 
       def create
-        result = Land.new(land_params)
+        property = Property.new
+        property.property_type = 'land'
+
         render json: { status: 'success', land: result } if result.save
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }

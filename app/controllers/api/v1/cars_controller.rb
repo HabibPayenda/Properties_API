@@ -4,13 +4,25 @@ module Api
   module V1
     class CarsController < ApplicationController
       def index
-        result = Car.all
-        render json: { status: 'success', cars: result }
+        result = Car.includes(:property, :agent, :offer, :address, :deal_info).all
+        render json: { status: 'success', cars: result.as_json(include: {
+            property: {},
+            agent: {},
+            offer: {},
+            address: {},
+            deal_info: {}
+        }) }
       end
 
       def show
-        result = Car.find(params[:id])
-        render json: { status: 'success', car: result } if result.present?
+        result = Car.includes(:property, :agent, :offer, :address, :deal_info).find(params[:id])
+        render json: { status: 'success', car: result.as_json(include: {
+            property: {},
+            agent: {},
+            offer: {},
+            address: {},
+            deal_info: {}
+        }) }
       rescue StandardError
         render json: { status: 'failed', info: 'car not found' }
       end
