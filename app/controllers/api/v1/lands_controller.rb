@@ -40,6 +40,10 @@ module Api
         land.zone = params[:zone]
         land.current_use = params[:current_use]
         land.property_id = property.id
+        land.property_manager_id = params[:property_manager_id]
+        land.agent_id = params[:agent_id]
+        land.image = params[:image]
+        land.image_
 
         deal_info = DealInfo.new if land.save
         deal_info.property_id = property.id

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_18_113623) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_18_114853) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -287,6 +287,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_113623) do
     t.bigint "property_id", null: false
     t.bigint "agent_id", null: false
     t.bigint "property_manager_id", null: false
+    t.text "image_url"
     t.index ["agent_id"], name: "index_lands_on_agent_id"
     t.index ["property_id"], name: "index_lands_on_property_id"
     t.index ["property_manager_id"], name: "index_lands_on_property_manager_id"
