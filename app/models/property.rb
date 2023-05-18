@@ -6,10 +6,11 @@ class Property < ApplicationRecord
 
   has_many :amenities, dependent: :destroy
   has_many :restrictions, dependent: :destroy
-  has_many :deal_infos, dependent: :destroy
+  has_one :deal_info, dependent: :destroy
 
-  has_many :property_addresses, dependent: :destroy
-  has_many :addresses, through: :property_addresses
+  has_one :property_address, dependent: :destroy
+  has_one :address, through: :property_address
+
 
   has_one :offer
 
