@@ -43,7 +43,7 @@ module Api
         land.property_manager_id = params[:property_manager_id]
         land.agent_id = params[:agent_id]
         land.image = params[:image]
-        land.image_
+        land.image_url = land.image.url
 
         deal_info = DealInfo.new if land.save
         deal_info.property_id = property.id
@@ -52,10 +52,11 @@ module Api
         deal_info.duration = params[:duration]
         deal_info.total_duration = params[:total_duration]
 
-        result = Land.includes(:property, :agent, :offer, :address, :deal_info).find(land.id)
+        result = Land.includes(:property, :agent, :property_manager, :offer, :address, :deal_info).find(land.id)
         render json: { status: 'success', land: result.as_json(include: {
             property: {},
             agent: {},
+            property_manager: {},
             offer: {},
             address: {},
             deal_info: {}
