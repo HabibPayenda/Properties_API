@@ -113,6 +113,21 @@ module Api
         render json: { status: 'failed', info: 'check your data' }
       end
 
+      def recent_users
+        result = User.includes(:contact, :address, :user_views, :reviews, :user_favorites,
+                      :user_searches).all.order(create_at: :desc)
+
+
+        render json: { status: 'success', users: result.as_json(include: {
+            contact: {},
+            address: {},
+            user_views: [],
+            reviews: [],
+            user_favorites: [],
+            user_searches: []
+        }) }
+      end
+
       private
 
       def user_params
