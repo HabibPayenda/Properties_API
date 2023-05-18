@@ -6,8 +6,8 @@ class Land < ApplicationRecord
   has_one :offer, through: :land_offer
   has_one :address, through: :property
   has_one :deal_info, through: :property
-  has_one :agent
-  has_one :property_manager
+  belongs_to :agent
+  belongs_to :property_manager
   has_one_attached :image
 
 end
