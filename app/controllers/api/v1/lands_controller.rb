@@ -4,8 +4,15 @@ module Api
   module V1
     class LandsController < ApplicationController
       def index
-        result = Land.all
-        render json: { status: 'success', lands: result }
+        result = Land.includes(:property, :agent, :property_manager, :offer, :address, :deal_info).find(land.id) if deal_info.save
+        render json: { status: 'success', lands: result.as_json(include: {
+            property: {},
+            agent: {},
+            property_manager: {},
+            offer: {},
+            address: {},
+            deal_info: {}
+        }) }
       end
 
       def show
