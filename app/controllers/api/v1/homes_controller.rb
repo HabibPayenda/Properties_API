@@ -4,7 +4,7 @@ module Api
   module V1
     class HomesController < ApplicationController
       def index
-        result = Home.includes(:property).all
+        result = Home.includes(:property).all.order(created_at: :desc)
         render json: { status: 'success', homes: result }, include: ['property']
       end
 

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       patch 'users/:id', to: 'users#update'
       delete 'users/:id', to: 'users#delete'
       get 'users/recent/users', to: 'users#recent_users'
+      post 'users/login', to: 'users#login'
 
       get 'property_managers', to: 'property_managers#index'
       get 'property_managers/:id', to: 'property_managers#show'

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  has_secure_password
+
   has_one :user_address
   has_one :user_contact
   has_many :user_favorites

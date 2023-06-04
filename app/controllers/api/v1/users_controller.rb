@@ -128,6 +128,18 @@ module Api
         }) }
       end
 
+      def login
+        result = User.find_by(name: user_params[:name])
+        if result&.authenticate(user_params[:password])
+
+          user_token = encode_token_user({ user_id: result.id, user_name: result.name, date_of_birth: result.date_of_birth,
+                                           gender: result.gender })
+          render json: { status: 'success', user: result, token: user_token }
+        else
+          render json: { status: 'failed', info: 'wrong user name or password!' }
+        end
+      end
+
       private
 
       def user_params
