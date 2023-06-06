@@ -8,6 +8,11 @@ module Api
         render json: { status: 'success', message: 'Entry created successfully' } if user_favorite_home.save
       end
 
+      def destroy
+        user_favorite_home = UserFavoriteHome.find(params[:id])
+        render json: {status: 'success', message: 'Favorite removed'} if user_favorite_home.destroy
+      end
+
       private
 
       def user_favorite_home_params

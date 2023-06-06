@@ -196,6 +196,7 @@ Rails.application.routes.draw do
       delete 'user_searches/:id', to: 'user_searches#delete'
 
       post 'user_favorite_homes', to: 'user_favorite_homes#create'
+      delete 'user_favorite_homes/:id', to: 'user_favorite_homes#destroy'
 
       get 'user_views', to: 'user_views#index'
       get 'user_views/:id', to: 'user_views#show'
