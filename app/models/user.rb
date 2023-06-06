@@ -9,6 +9,13 @@ class User < ApplicationRecord
   has_many :user_searches
   has_many :user_views
   has_many :user_reviews
+  has_many :user_favorite_lands
+  has_many :user_favorite_cars
+  has_many :user_favorite_homes
+
+  has_many :homes, through: :user_favorite_homes
+  has_many :cars, through: :user_favorite_cars
+  has_many :lands, through: :user_favorite_lands
 
   has_many :reviews, through: :user_reviews
   has_one :contact, through: :user_contact
