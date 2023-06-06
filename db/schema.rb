@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_04_062938) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_06_085509) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -476,6 +476,33 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_04_062938) do
     t.index ["user_id"], name: "index_user_contacts_on_user_id"
   end
 
+  create_table "user_favorite_cars", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "car_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["car_id"], name: "index_user_favorite_cars_on_car_id"
+    t.index ["user_id"], name: "index_user_favorite_cars_on_user_id"
+  end
+
+  create_table "user_favorite_homes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "home_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["home_id"], name: "index_user_favorite_homes_on_home_id"
+    t.index ["user_id"], name: "index_user_favorite_homes_on_user_id"
+  end
+
+  create_table "user_favorite_lands", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "land_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["land_id"], name: "index_user_favorite_lands_on_land_id"
+    t.index ["user_id"], name: "index_user_favorite_lands_on_user_id"
+  end
+
   create_table "user_favorites", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "property_id", null: false
@@ -604,6 +631,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_04_062938) do
   add_foreign_key "user_addresses", "users"
   add_foreign_key "user_contacts", "contacts"
   add_foreign_key "user_contacts", "users"
+  add_foreign_key "user_favorite_cars", "cars"
+  add_foreign_key "user_favorite_cars", "users"
+  add_foreign_key "user_favorite_homes", "homes"
+  add_foreign_key "user_favorite_homes", "users"
+  add_foreign_key "user_favorite_lands", "lands"
+  add_foreign_key "user_favorite_lands", "users"
   add_foreign_key "user_favorites", "properties"
   add_foreign_key "user_favorites", "users"
   add_foreign_key "user_reviews", "agents"

@@ -185,7 +185,7 @@ Rails.application.routes.draw do
 
       get 'user_favorites', to: 'user_favorites#index'
       get 'user_favorites/:id', to: 'user_favorites#show'
-      post 'user_favorites', to: 'user_favorites#index'
+      post 'user_favorites', to: 'user_favorites#create'
       patch 'user_favorites/:id', to: 'user_favorites#update'
       delete 'user_favorites/:id', to: 'user_favorites#delete'
 
