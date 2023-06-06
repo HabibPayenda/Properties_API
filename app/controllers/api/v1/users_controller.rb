@@ -10,7 +10,7 @@ module Api
       end
 
       def show
-        result = User.includes(:contact, :address, :user_views, :reviews, :user_favorites,
+        result = User.includes(:contact, :address, :user_views, :reviews, :cars, :homes, :lands,
                                :user_searches).find(params[:id])
         if result.present?
           render json: { status: 'success', user: result.as_json(include: {
@@ -18,7 +18,9 @@ module Api
                                                                    address: {},
                                                                    user_views: [],
                                                                    reviews: [],
-                                                                   user_favorites: [],
+                                                                   cars: [],
+                                                                   homes: [],
+                                                                   lands: [],
                                                                    user_searches: []
                                                                  }) }
         end
