@@ -9,7 +9,8 @@ module Api
       end
 
       def show
-        result = Home.includes(:home_rooms, :property, :offer, :deal_info, :restrictions, :amenities, :address).find(params[:id])
+        result = Home.includes(:home_rooms, :property, :offer, :deal_info, :restrictions, :amenities,
+                               :address).find(params[:id])
         if result.present?
           render json: { status: 'success', home: result.as_json(include: {
                                                                    home_rooms: [],

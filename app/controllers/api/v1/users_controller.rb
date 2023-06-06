@@ -121,13 +121,13 @@ module Api
 
 
         render json: { status: 'success', users: result.as_json(include: {
-            contact: {},
-            address: {},
-            user_views: [],
-            reviews: [],
-            user_favorites: [],
-            user_searches: []
-        }) }
+                                                                  contact: {},
+                                                                  address: {},
+                                                                  user_views: [],
+                                                                  reviews: [],
+                                                                  user_favorites: [],
+                                                                  user_searches: []
+                                                                }) }
       end
 
       def login

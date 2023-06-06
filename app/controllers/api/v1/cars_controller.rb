@@ -6,23 +6,23 @@ module Api
       def index
         result = Car.includes(:property, :agent, :offer, :address, :deal_info).all
         render json: { status: 'success', cars: result.as_json(include: {
-            property: {},
-            agent: {},
-            offer: {},
-            address: {},
-            deal_info: {}
-        }) }
+                                                                 property: {},
+                                                                 agent: {},
+                                                                 offer: {},
+                                                                 address: {},
+                                                                 deal_info: {}
+                                                               }) }
       end
 
       def show
         result = Car.includes(:property, :agent, :offer, :address, :deal_info).find(params[:id])
         render json: { status: 'success', car: result.as_json(include: {
-            property: {},
-            agent: {},
-            offer: {},
-            address: {},
-            deal_info: {}
-        }) }
+                                                                property: {},
+                                                                agent: {},
+                                                                offer: {},
+                                                                address: {},
+                                                                deal_info: {}
+                                                              }) }
       rescue StandardError
         render json: { status: 'failed', info: 'car not found' }
       end

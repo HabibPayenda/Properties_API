@@ -9,5 +9,4 @@ class Land < ApplicationRecord
   belongs_to :agent
   belongs_to :property_manager
   has_one_attached :image
-
 end

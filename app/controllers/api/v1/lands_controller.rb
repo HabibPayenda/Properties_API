@@ -6,13 +6,13 @@ module Api
       def index
         result = Land.includes(:property, :agent, :property_manager, :offer, :address, :deal_info).all
         render json: { status: 'success', lands: result.as_json(include: {
-            property: {},
-            agent: {},
-            property_manager: {},
-            offer: {},
-            address: {},
-            deal_info: {}
-        }) }
+                                                                  property: {},
+                                                                  agent: {},
+                                                                  property_manager: {},
+                                                                  offer: {},
+                                                                  address: {},
+                                                                  deal_info: {}
+                                                                }) }
       end
 
       def show
@@ -59,17 +59,18 @@ module Api
         deal_info.duration = params[:duration]
         deal_info.total_duration = params[:total_duration]
 
-        result = Land.includes(:property, :agent, :property_manager, :offer, :address, :deal_info).find(land.id) if deal_info.save
+        if deal_info.save
+          result = Land.includes(:property, :agent, :property_manager, :offer, :address,
+                                 :deal_info).find(land.id)
+        end
         render json: { status: 'success', land: result.as_json(include: {
-            property: {},
-            agent: {},
-            property_manager: {},
-            offer: {},
-            address: {},
-            deal_info: {}
-        }) }
-
-
+                                                                 property: {},
+                                                                 agent: {},
+                                                                 property_manager: {},
+                                                                 offer: {},
+                                                                 address: {},
+                                                                 deal_info: {}
+                                                               }) }
       rescue StandardError
         render json: { status: 'failed', info: 'check your data' }
       end
@@ -95,7 +96,7 @@ module Api
 
       def land_params
         params.require(:land).permit(:area, :zone, :current_use, :property_id, :name, :description, :availability_status, :property_manager_id,
-            :agent_id, :province, :city, :district, :deal_type, :duration, :price_per_duration, :total_price, :total_duration, :image, :title, :start_date, :end_date, :offer_price, :home_id, :property_id, :deal_info_id)
+                                     :agent_id, :province, :city, :district, :deal_type, :duration, :price_per_duration, :total_price, :total_duration, :image, :title, :start_date, :end_date, :offer_price, :home_id, :property_id, :deal_info_id)
       end
     end
   end
