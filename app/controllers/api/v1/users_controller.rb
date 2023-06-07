@@ -19,7 +19,7 @@ module Api
                                                                    user_views: [],
                                                                    reviews: [],
                                                                    cars: [],
-                                                                   homes: [],
+                                                                   homes: { include: :property},
                                                                    lands: [],
                                                                    user_searches: []
                                                                  }) }
