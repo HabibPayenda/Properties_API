@@ -55,6 +55,7 @@ Rails.application.routes.draw do
       delete 'agent_contacts/:id', to: 'agent_contacts#delete'
 
       get 'homes', to: 'homes#index'
+      get '/homes/search', to: 'homes#search'
       get 'homes/:id', to: 'homes#show'
       post 'homes', to: 'homes#create'
       patch 'homes/:id', to: 'homes#update'

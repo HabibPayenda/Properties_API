@@ -255,6 +255,22 @@ module Api
         render json: { status: 'failed', info: 'check your data' }
       end
 
+      def search
+        search_term = params[:q]
+        result = Home.includes(:property, :deal_info, :home_rooms, :address).joins(:property).where("properties.name ILIKE ?", "%#{search_term}%")
+        if result.present?
+        render json: { status: 'success', homes: result.as_json(include: {
+                                                                  property: {},
+                                                                    deal_info: {},
+                                                                    home_rooms: {},
+                                                                    address: {}
+                                                                }) }
+        else
+          render json: { status: 'success', homes: [] }
+        end
+
+      end
+
       private
 
       def home_params
