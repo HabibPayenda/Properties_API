@@ -11,7 +11,7 @@ module Api
 
       def destroy
         user_favorite_home = UserFavoriteHome.where('home_id': params[:id]).first
-        render json: {status: 'success', message: 'Favorite removed'} if user_favorite_home.destroy
+        render json: { status: 'success', message: 'Favorite removed' } if user_favorite_home.destroy
       end
 
       private
