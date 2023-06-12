@@ -257,7 +257,10 @@ module Api
 
       def search
         search_term = params[:q]
-        result = Home.includes(:property, :deal_info, :home_rooms, :address).joins(:property).where("properties.name ILIKE ?", "%#{search_term}%").order(created_at: :desc)
+        deal_type = params[:d]
+        query = Home.includes(:property, :deal_info, :home_rooms, :address).joins(property: :deal_info).where("properties.name ILIKE ?", "%#{search_term}%")
+        query = query.where("deal_infos.deal_type = ?", deal_type) if deal_type.present?
+        result = query.all.order(created_at: :desc)
         if result.present?
         render json: { status: 'success', homes: result.as_json(include: {
                                                                   property: {},
