@@ -268,21 +268,19 @@ module Api
         if number_of_rooms.present?
           query = query.group('homes.id, properties.id, deal_infos.id, addresses.id, home_rooms_homes.id')
                       .having('COUNT(home_rooms.id) = ?', number_of_rooms.to_i)
+        else
+          query = query.group('homes.id, properties.id, deal_infos.id, addresses.id, home_rooms_homes.id')
         end
         if deal_type.present?
           query = query.where("deal_infos.deal_type = ?", deal_type)
         end
-        result = query.select('distinct homes.*, properties.*, deal_infos.*, addresses.*')
+        result = query.select('distinct homes.*, properties.image_url as image_url,COUNT(DISTINCT home_rooms.id) as home_rooms_count, properties.description as description, deal_infos.total_price as price, deal_infos.deal_type as deal_type, addresses.city as city')
                      .order(created_at: :desc)
                      .all
 
+
         if result.present?
-        render json: { status: 'success', homes: result.as_json(include: {
-                                                                  property: {},
-                                                                    deal_info: {},
-                                                                    home_rooms: {},
-                                                                    address: {}
-                                                                }) }
+        render json: { status: 'success', homes: result }
         else
           render json: { status: 'success', homes: [] }
         end
