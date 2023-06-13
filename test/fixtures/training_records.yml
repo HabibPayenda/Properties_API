@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  score: 1
+  trainer: one
+  agent: one
+  training: one
+  description: MyText
+
+two:
+  score: 1
+  trainer: two
+  agent: two
+  training: two
+  description: MyText

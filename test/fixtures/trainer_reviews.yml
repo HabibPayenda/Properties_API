@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  agent: one
+  trainer: one
+  review: one
+
+two:
+  agent: two
+  trainer: two
+  review: two

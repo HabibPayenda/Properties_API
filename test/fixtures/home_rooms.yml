@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  width: 1
+  length: 1
+  windows: 1
+  cup_board: false
+  to_sun: false
+  color: MyString
+
+two:
+  width: 1
+  length: 1
+  windows: 1
+  cup_board: false
+  to_sun: false
+  color: MyString
