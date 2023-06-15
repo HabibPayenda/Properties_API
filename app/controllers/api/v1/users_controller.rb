@@ -145,7 +145,7 @@ module Api
       def add_push_token
         result = User.find(params[:id])
         result.push_token = params[:push_token] if result.present?
-        render json: {status: 'success', user: result} if result.save
+        render json: { status: 'success', user: result } if result.save
       end
 
       private
