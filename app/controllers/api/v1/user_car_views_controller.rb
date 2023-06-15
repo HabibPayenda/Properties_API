@@ -4,8 +4,8 @@ module Api
   module V1
     class UserCarViewsController < ApplicationController
       def create
-        user_car_view = UserCarView.new(user_car_view_params)
-        render json: {status: 'success', user_car_view} if user_car_view.save
+        result = UserCarView.new(user_car_view_params)
+        render json: {status: 'success', user_car_view: result} if user_car_view.save
 
         private
 
