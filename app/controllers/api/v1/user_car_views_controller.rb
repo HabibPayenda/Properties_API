@@ -11,7 +11,7 @@ module Api
       private
 
       def user_car_view_params
-        params.require(:user_car_view).permit(:user_id, car_id)
+        params.require(:user_car_view).permit(:user_id, :car_id)
       end
     end
   end
