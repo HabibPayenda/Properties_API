@@ -1,7 +1,7 @@
 class Api::V1::UserHomeViewsController < ApplicationController
   def create
     user_home_view = UserHomeView.new(user_home_view_params)
-    user_home_view.save
+    render json: {status: 'success', result: user_home_view} if user_home_view.save
   end
 
   private
