@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       get 'users/recent/users', to: 'users#recent_users'
       post 'users/login', to: 'users#login'
 
-      get 'user_home_views', to: 'use'
+      post 'user_home_views', to: 'user_home_views#create'
 
       get 'property_managers', to: 'property_managers#index'
       get 'property_managers/:id', to: 'property_managers#show'
