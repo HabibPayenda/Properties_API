@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateUserHomeViews < ActiveRecord::Migration[7.0]
   def change
     create_table :user_home_views do |t|
