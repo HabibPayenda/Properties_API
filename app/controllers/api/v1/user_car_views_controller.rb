@@ -1,2 +1,8 @@
-class Api::V1::UserCarViewsController < ApplicationController
+# frozen_string_literal: true
+
+module Api
+  module V1
+    class UserCarViewsController < ApplicationController
+    end
+  end
 end
