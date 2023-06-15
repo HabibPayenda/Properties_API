@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
       post 'user_home_views', to: 'user_home_views#create'
 
+      post 'user_car_views', to: 'user_car_views#create'
+
       get 'property_managers', to: 'property_managers#index'
       get 'property_managers/:id', to: 'property_managers#show'
       post 'property_managers', to: 'property_managers#create'
