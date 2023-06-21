@@ -20,6 +20,8 @@ Rails.application.routes.draw do
       post 'user_profile_image/:id', to: 'users#upload_profile_image'
       post 'user_last_login/:id', to: 'users#last_login'
 
+      post 'user_notify/:id', to: 'users#notify'
+
       post 'user_home_views', to: 'user_home_views#create'
 
       post 'user_car_views', to: 'user_car_views#create'

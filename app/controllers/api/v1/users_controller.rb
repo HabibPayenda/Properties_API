@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require_relative '../../../../lib/ExpoNotifications'
 module Api
   module V1
     class UsersController < ApplicationController
@@ -161,11 +161,17 @@ module Api
         render json: user
       end
 
+      def notify
+        user = User.find(params[:id])
+        notification = ExpoNotification.new(user, params[:title], params[:body])
+        notification.notify
+      end
+
       private
 
       def user_params
         params.require(:user).permit(:name, :password, :date_of_birth, :gender, :push_token, :last_login, :image,
-                                     :province, :city, :district, :phone_number_one, :email_one)
+                                     :province, :city, :district, :phone_number_one, :email_one, :title, :body)
       end
     end
   end
