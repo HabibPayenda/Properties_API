@@ -17,6 +17,8 @@ Rails.application.routes.draw do
       delete 'users/:id', to: 'users#delete'
       get 'users/recent/users', to: 'users#recent_users'
       post 'users/login', to: 'users#login'
+      post 'user_profile_image/:id', to: 'users#upload_profile_image'
+      post 'user_last_login/:id', to: 'users#last_login'
 
       post 'user_home_views', to: 'user_home_views#create'
 

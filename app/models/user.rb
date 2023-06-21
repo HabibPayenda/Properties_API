@@ -22,14 +22,13 @@ class User < ApplicationRecord
 
   has_one_attached :image
 
-  after_create_commit do
-    set_image_url
-  end
+
 
   private
 
   def set_image_url
-    self.image_url = image.url
+
+    self.image_url = self.image.url
     save
   end
 end

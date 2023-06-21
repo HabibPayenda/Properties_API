@@ -148,6 +148,19 @@ module Api
         render json: { status: 'success', user: result } if result.save
       end
 
+      def upload_profile_image
+        result = User.find(params[:id])
+        result.image = params[:image]
+        result.image_url = result.image.url
+        render json: { status: "success", user: result } if result.save
+      end
+
+      def last_login
+        user = User.find(params[:id])
+        user.update(last_login: params[:last_login])
+        render json: user
+      end
+
       private
 
       def user_params
