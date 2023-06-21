@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       post 'user_last_login/:id', to: 'users#last_login'
 
       post 'user_notify/:id', to: 'users#notify'
+      get 'user_homes/:id', to: 'users#recommended_homes'
 
       post 'user_home_views', to: 'user_home_views#create'
 

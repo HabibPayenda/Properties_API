@@ -167,6 +167,14 @@ module Api
         notification.notify
       end
 
+      def recommended_homes
+        if params[:id]
+          user = User.find(params[:id])
+          recommended_homes = Home.recommended_for(user)
+          render json: { status: 'success', homes: recommended_homes } if recommended_homes.present?
+        end
+      end
+
       private
 
       def user_params
