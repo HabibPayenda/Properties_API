@@ -27,6 +27,5 @@ module PropertiesApi
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     # require "active_storage/engine"
-
   end
 end

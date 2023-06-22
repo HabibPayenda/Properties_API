@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative '../../../../lib/ExpoNotifications'
 module Api
   module V1
@@ -152,7 +153,7 @@ module Api
         result = User.find(params[:id])
         result.image = params[:image]
         result.image_url = result.image.url
-        render json: { status: "success", user: result } if result.save
+        render json: { status: 'success', user: result } if result.save
       end
 
       def last_login
@@ -168,11 +169,11 @@ module Api
       end
 
       def recommended_homes
-        if params[:id]
-          user = User.find(params[:id])
-          recommended_homes = Home.recommended_for(user)
-          render json: { status: 'success', homes: recommended_homes } if recommended_homes.present?
-        end
+        return unless params[:id]
+
+        user = User.find(params[:id])
+        recommended_homes = Home.recommended_for(user)
+        render json: { status: 'success', homes: recommended_homes } if recommended_homes.present?
       end
 
       private

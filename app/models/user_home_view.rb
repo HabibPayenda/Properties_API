@@ -9,6 +9,6 @@ class UserHomeView < ApplicationRecord
   private
 
   def create_recommendable_rating
-    user.rate(self.home, 1)
+    user.rate(home, 1)
   end
 end
