@@ -172,8 +172,8 @@ module Api
         return unless params[:id]
 
         user = User.find(params[:id])
-        recommended_homes = Home.recommended_for(user)
-        render json: { status: 'success', homes: recommended_homes } if recommended_homes.present?
+        recommended_homes = Home.recommendations_for_user(user.id)
+        render json: { status: 'success', homes: recommended_homes }
       end
 
       private
